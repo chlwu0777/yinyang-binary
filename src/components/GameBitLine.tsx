@@ -34,7 +34,7 @@ export default function GameBitLine({ value, position, canFlip, isAnimating: ani
     >
       <Line isYang={isY} w={60} h={10} glow={canFlip} />
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 64 }}>
-        <span style={{ fontFamily: 'monospace', fontSize: 20, fontWeight: 'bold', color: isY ? '#1a1a1a' : '#555' }}>{value}</span>
+        <span style={{ fontFamily: 'monospace', fontSize: 20, fontWeight: 'bold', color: isY ? '#e0e0f0' : '#707080' }}>{value}</span>
         <span style={{ fontSize: 13, color: theme.sub }}>{isY ? '阳 Yang' : '阴 Yin'}</span>
       </div>
     </button>

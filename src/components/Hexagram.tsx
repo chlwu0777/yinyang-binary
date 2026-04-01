@@ -17,11 +17,11 @@ export default function Hexagram({ binary, size = 'normal', glow }: HexagramProp
       {binary.split('').map((bit, i) => (
         <div key={i} style={{ display: 'flex', justifyContent: 'center', gap: 4 }}>
           {bit === '1' ? (
-            <div style={{ width: w, height: h, background: glow ? '#1a1a1a' : '#333', borderRadius: 2 }} />
+            <div style={{ width: w, height: h, background: glow ? '#e0e0f0' : '#a0a0b0', borderRadius: 2 }} />
           ) : (
             <>
-              <div style={{ width: w * 0.4, height: h, background: glow ? '#666' : '#555', borderRadius: 2 }} />
-              <div style={{ width: w * 0.4, height: h, background: glow ? '#666' : '#555', borderRadius: 2 }} />
+              <div style={{ width: w * 0.4, height: h, background: glow ? '#9090a0' : '#707080', borderRadius: 2 }} />
+              <div style={{ width: w * 0.4, height: h, background: glow ? '#9090a0' : '#707080', borderRadius: 2 }} />
             </>
           )}
         </div>

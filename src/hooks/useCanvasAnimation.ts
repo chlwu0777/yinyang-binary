@@ -49,7 +49,7 @@ export function useCanvasAnimation(
         for (let i = 0; i < 22; i++) {
           const y = ((animTime * codeSpeed * (0.7 + (colSeed % 3) * 0.15) + i * 22 + colSeed * 2) % (h + 80)) - 40;
           const opacity = (1 - (i / 22) * 0.85) * (0.12 + Math.sin(animTime * 2 + cx * 0.02) * 0.06);
-          ctx.fillStyle = `rgba(40,40,50,${opacity})`;
+          ctx.fillStyle = `rgba(96,165,250,${opacity * 0.7})`;
           ctx.fillText(codeChars[(cx + i) % 2], cx, y);
         }
       }
@@ -75,7 +75,7 @@ export function useCanvasAnimation(
             ctx.beginPath();
             ctx.moveTo(x1, adjustedY);
             ctx.lineTo(x2, adjustedY);
-            ctx.strokeStyle = `rgba(30,30,40,${0.2 * (1 - Math.abs(depth - 0.5) * 2)})`;
+            ctx.strokeStyle = `rgba(96,165,250,${0.15 * (1 - Math.abs(depth - 0.5) * 2)})`;
             ctx.lineWidth = 1.2;
             ctx.stroke();
           }
@@ -91,7 +91,7 @@ export function useCanvasAnimation(
             if (y === -60) ctx.moveTo(x, adjustedY);
             else ctx.lineTo(x, adjustedY);
           }
-          ctx.strokeStyle = 'rgba(30,30,40,0.25)';
+          ctx.strokeStyle = 'rgba(96,165,250,0.18)';
           ctx.lineWidth = 2;
           ctx.stroke();
 
@@ -104,14 +104,14 @@ export function useCanvasAnimation(
             const pulse = Math.sin(animTime * 3 + y * 0.08) * 0.35 + 0.65;
             ctx.beginPath();
             ctx.arc(x, adjustedY, size * pulse, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(40,40,50,${(0.3 + depth * 0.5) * pulse})`;
+            ctx.fillStyle = `rgba(96,165,250,${(0.2 + depth * 0.4) * pulse})`;
             ctx.fill();
           }
         }
       }
 
       if (options.isGamePage) {
-        ctx.strokeStyle = 'rgba(0,0,0,0.08)';
+        ctx.strokeStyle = 'rgba(96,165,250,0.06)';
         ctx.lineWidth = 0.5;
         for (let x = 0; x < w; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
         for (let y = 0; y < h; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
@@ -124,7 +124,7 @@ export function useCanvasAnimation(
         const pulse = Math.sin(p.pulse) * 0.3 + 0.7;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size * pulse, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(60,60,70,${p.opacity * pulse})`;
+        ctx.fillStyle = `rgba(140,160,200,${p.opacity * pulse})`;
         ctx.fill();
       });
 

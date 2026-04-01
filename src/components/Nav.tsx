@@ -3,7 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { s } from '@/lib/theme';
+import LiquidGlass from 'liquid-glass-react';
+import { s, theme } from '@/lib/theme';
 
 const navItems = [
   { href: '/', label: '首页 Home' },
@@ -17,20 +18,30 @@ export default function Nav() {
 
   return (
     <nav style={s.nav}>
-      <div style={s.navIn}>
-        {navItems.map(({ href, label }) => (
-          <Link
-            key={href}
-            href={href}
-            style={{
-              ...s.navBtn(pathname === href),
-              textDecoration: 'none',
-            }}
-          >
-            {label}
-          </Link>
-        ))}
-      </div>
+      <LiquidGlass
+        cornerRadius={16}
+        blurAmount={0.08}
+        saturation={130}
+        elasticity={0.15}
+        displacementScale={40}
+        padding="4px"
+      >
+        <div style={{ display: 'flex', gap: 4 }}>
+          {navItems.map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              style={{
+                ...s.navBtn(pathname === href),
+                textDecoration: 'none',
+                transition: 'all 0.2s',
+              }}
+            >
+              {label}
+            </Link>
+          ))}
+        </div>
+      </LiquidGlass>
     </nav>
   );
 }
