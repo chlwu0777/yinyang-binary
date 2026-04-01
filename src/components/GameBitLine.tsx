@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Line from './Line';
-import { theme } from '@/lib/theme';
+import { useAppTheme } from '@/contexts/AppProviders';
 
 interface GameBitLineProps {
   value: number;
@@ -13,6 +13,7 @@ interface GameBitLineProps {
 }
 
 export default function GameBitLine({ value, position, canFlip, isAnimating: anim, onFlip }: GameBitLineProps) {
+  const theme = useAppTheme();
   const isY = value === 1;
 
   return (
@@ -34,7 +35,7 @@ export default function GameBitLine({ value, position, canFlip, isAnimating: ani
     >
       <Line isYang={isY} w={60} h={10} glow={canFlip} />
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 64 }}>
-        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 20, fontWeight: 'bold', color: isY ? '#1C1917' : '#78716C' }}>{value}</span>
+        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 20, fontWeight: 'bold', color: isY ? theme.yangLine : theme.yinLine }}>{value}</span>
         <span style={{ fontSize: 13, color: theme.sub }}>{isY ? '阳 Yang' : '阴 Yin'}</span>
       </div>
     </button>

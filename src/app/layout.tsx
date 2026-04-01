@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { AppProviders } from '@/contexts/AppProviders';
-import MatrixBackground from '@/components/MatrixBackground';
-import Nav from '@/components/Nav';
-import { s } from '@/lib/theme';
+import LayoutShell from '@/components/LayoutShell';
 
 export const metadata: Metadata = {
   title: '二进制之道 | The Tao of Binary',
@@ -15,13 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="zh-CN">
       <body>
         <AppProviders>
-          <div style={s.ctr}>
-            <MatrixBackground />
-            <Nav />
-            <div style={s.content}>
-              {children}
-            </div>
-          </div>
+          <LayoutShell>{children}</LayoutShell>
         </AppProviders>
       </body>
     </html>

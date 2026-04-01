@@ -2,12 +2,16 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { timelineMilestones } from '@/data/timeline';
-import { theme } from '@/lib/theme';
+import { useAppTheme, useLang } from '@/contexts/AppProviders';
+import { t } from '@/lib/i18n';
 
-function TimelineItem({ milestone, index }: { milestone: typeof timelineMilestones[number]; index: number }) {
+function TimelineItem({ milestone, index, lang }: { milestone: typeof timelineMilestones[number]; index: number; lang: 'cn' | 'en' }) {
+  const theme = useAppTheme();
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   const isLeft = index % 2 === 0;
+  const title = lang === 'cn' ? milestone.titleCn : milestone.titleEn;
+  const desc = lang === 'cn' ? milestone.descCn : milestone.descEn;
 
   useEffect(() => {
     const el = ref.current;
@@ -97,19 +101,13 @@ function TimelineItem({ milestone, index }: { milestone: typeof timelineMileston
         </div>
 
         {/* Title */}
-        <h3 style={{ fontSize: 20, fontWeight: 500, marginBottom: 4, color: theme.text, lineHeight: 1.4 }}>
-          {milestone.titleCn}
+        <h3 style={{ fontSize: 20, fontWeight: 500, marginBottom: 12, color: theme.text, lineHeight: 1.4 }}>
+          {title}
         </h3>
-        <p style={{ fontSize: 14, color: theme.sub, marginBottom: 12, lineHeight: 1.4 }}>
-          {milestone.titleEn}
-        </p>
 
         {/* Description */}
-        <p style={{ fontSize: 14, lineHeight: 1.8, color: theme.text, marginBottom: 8 }}>
-          {milestone.descCn}
-        </p>
-        <p style={{ fontSize: 13, lineHeight: 1.7, color: theme.sub }}>
-          {milestone.descEn}
+        <p style={{ fontSize: 14, lineHeight: 1.8, color: theme.sub }}>
+          {desc}
         </p>
 
         {/* Binary representation */}
@@ -134,6 +132,9 @@ function TimelineItem({ milestone, index }: { milestone: typeof timelineMileston
 }
 
 export default function ScrollTimeline() {
+  const theme = useAppTheme();
+  const lang = useLang();
+  const i = t(lang);
   const sectionRef = useRef<HTMLDivElement>(null);
   const [titleVisible, setTitleVisible] = useState(false);
 
@@ -167,16 +168,10 @@ export default function ScrollTimeline() {
         }}
       >
         <h2 style={{ fontSize: 36, fontWeight: 300, letterSpacing: 6, marginBottom: 12, color: theme.text }}>
-          从太极到计算机
+          {i.timeline.title}
         </h2>
-        <p style={{ fontSize: 16, color: theme.sub, letterSpacing: 2 }}>
-          From Taiji to Computer
-        </p>
-        <p style={{ fontSize: 14, color: '#999', marginTop: 16, maxWidth: 500, margin: '16px auto 0' }}>
-          一条跨越五千年的二进制思想之路
-        </p>
-        <p style={{ fontSize: 13, color: '#aaa', marginTop: 4 }}>
-          A 5,000-year journey of binary thought
+        <p style={{ fontSize: 14, color: theme.sub, marginTop: 16, maxWidth: 500, margin: '16px auto 0' }}>
+          {i.timeline.subtitle}
         </p>
       </div>
 
@@ -194,7 +189,7 @@ export default function ScrollTimeline() {
         }} />
 
         {timelineMilestones.map((milestone, index) => (
-          <TimelineItem key={index} milestone={milestone} index={index} />
+          <TimelineItem key={index} milestone={milestone} index={index} lang={lang} />
         ))}
       </div>
 
@@ -209,14 +204,9 @@ export default function ScrollTimeline() {
       }}>
         <p style={{ fontSize: 28, fontWeight: 300, marginBottom: 12, color: theme.text }}>☯ → 01</p>
         <p style={{ fontSize: 15, color: theme.sub, lineHeight: 1.8 }}>
-          从太极的浑然一体，到阴阳的二元分立，<br />
-          从伏羲的三爻八卦，到现代计算机的万亿晶体管。<br />
-          0和1的故事，跨越了五千年。
-        </p>
-        <p style={{ fontSize: 13, color: '#999', marginTop: 12, lineHeight: 1.8 }}>
-          From the undivided Taiji to the binary split of Yin and Yang,<br />
-          from Fu Xi&apos;s trigrams to trillions of transistors.<br />
-          The story of 0 and 1 spans five millennia.
+          {i.timeline.ending1}<br />
+          {i.timeline.ending2}<br />
+          {i.timeline.ending3}
         </p>
       </div>
     </section>

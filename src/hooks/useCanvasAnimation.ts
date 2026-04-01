@@ -4,7 +4,7 @@ import { useEffect, type RefObject } from 'react';
 
 export function useCanvasAnimation(
   canvasRef: RefObject<HTMLCanvasElement | null>,
-  options: { isGamePage: boolean; themeBg: string }
+  options: { isGamePage: boolean; themeBg: string; isDark?: boolean }
 ) {
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -38,6 +38,13 @@ export function useCanvasAnimation(
       ctx.fillStyle = options.themeBg;
       ctx.fillRect(0, 0, w, h);
 
+      // Dynamic colors based on theme
+      const dk = options.isDark;
+      const rainColor = dk ? 'rgba(234,179,8,' : 'rgba(28,25,23,';
+      const helixColor = dk ? 'rgba(250,250,249,' : 'rgba(28,25,23,';
+      const particleColor = dk ? 'rgba(168,162,158,' : 'rgba(28,25,23,';
+      const gridColor = dk ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.05)';
+
       // Matrix code rain
       const codeChars = '01';
       ctx.font = '12px "SF Mono", "Consolas", "PingFang SC", monospace';
@@ -49,7 +56,7 @@ export function useCanvasAnimation(
         for (let i = 0; i < 22; i++) {
           const y = ((animTime * codeSpeed * (0.7 + (colSeed % 3) * 0.15) + i * 22 + colSeed * 2) % (h + 80)) - 40;
           const opacity = (1 - (i / 22) * 0.85) * (0.12 + Math.sin(animTime * 2 + cx * 0.02) * 0.06);
-          ctx.fillStyle = `rgba(28,25,23,${opacity})`;
+          ctx.fillStyle = `${rainColor}${opacity})`;
           ctx.fillText(codeChars[(cx + i) % 2], cx, y);
         }
       }
@@ -112,7 +119,7 @@ export function useCanvasAnimation(
             const avgDepth = pass === 2 ? 0.75 : 0.25;
             const strandAlpha = 0.06 + avgDepth * 0.14;
             const strandWidth = 0.5 + avgDepth * 1;
-            ctx.strokeStyle = `rgba(28,25,23,${strandAlpha})`;
+            ctx.strokeStyle = `${helixColor}${strandAlpha})`;
             ctx.lineWidth = strandWidth;
             ctx.stroke();
 
@@ -129,7 +136,7 @@ export function useCanvasAnimation(
               const nodeA = (0.08 + depthNorm * 0.3) * pulse;
               ctx.beginPath();
               ctx.arc(nx, pt.y, nodeR, 0, Math.PI * 2);
-              ctx.fillStyle = `rgba(40,40,65,${nodeA})`;
+              ctx.fillStyle = `${helixColor}${nodeA})`;
               ctx.fill();
             }
           }
@@ -145,14 +152,14 @@ export function useCanvasAnimation(
                 ctx.beginPath();
                 ctx.moveTo(pt.x0, pt.y);
                 ctx.lineTo(pt.x1, pt.y);
-                ctx.strokeStyle = `rgba(28,25,23,${rungAlpha})`;
+                ctx.strokeStyle = `${helixColor}${rungAlpha})`;
                 ctx.lineWidth = 0.5;
                 ctx.stroke();
                 // Small dots at each end
                 for (const ex of [pt.x0, pt.x1]) {
                   ctx.beginPath();
                   ctx.arc(ex, pt.y, 1.2, 0, Math.PI * 2);
-                  ctx.fillStyle = `rgba(28,25,23,${rungAlpha * 1.5})`;
+                  ctx.fillStyle = `${helixColor}${rungAlpha * 1.5})`;
                   ctx.fill();
                 }
               }
@@ -162,7 +169,7 @@ export function useCanvasAnimation(
       }
 
       if (options.isGamePage) {
-        ctx.strokeStyle = 'rgba(0,0,0,0.08)';
+        ctx.strokeStyle = gridColor;
         ctx.lineWidth = 0.5;
         for (let x = 0; x < w; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
         for (let y = 0; y < h; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
@@ -175,7 +182,7 @@ export function useCanvasAnimation(
         const pulse = Math.sin(p.pulse) * 0.3 + 0.7;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size * pulse, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(28,25,23,${p.opacity * pulse})`;
+        ctx.fillStyle = `${particleColor}${p.opacity * pulse})`;
         ctx.fill();
       });
 
@@ -190,5 +197,5 @@ export function useCanvasAnimation(
       window.removeEventListener('resize', resize);
       cancelAnimationFrame(animId);
     };
-  }, [canvasRef, options.isGamePage, options.themeBg]);
+  }, [canvasRef, options.isGamePage, options.themeBg, options.isDark]);
 }

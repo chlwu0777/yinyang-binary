@@ -1,8 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import { LinesByHexContext, HexLangModeContext } from '@/contexts/AppProviders';
-import { theme } from '@/lib/theme';
+import { LinesByHexContext, HexLangModeContext, useAppTheme } from '@/contexts/AppProviders';
 import type { HexagramData } from '@/data/hexagrams';
 
 const LINE_LABELS = ['初 Initial', '二 2nd', '三 3rd', '四 4th', '五 5th', '上 Top'];
@@ -16,6 +15,7 @@ function getLinesForHex(hexNum: number, linesByHex: Record<number, unknown[]> | 
 }
 
 export default function HexagramInteractive({ hex }: { hex: HexagramData | null }) {
+  const theme = useAppTheme();
   const linesByHex = useContext(LinesByHexContext);
   const langMode = useContext(HexLangModeContext);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -42,11 +42,11 @@ export default function HexagramInteractive({ hex }: { hex: HexagramData | null 
       const active = index !== null ? index : currentPinned;
       rows.forEach((row, j) => {
         const isActive = active === j;
-        row.style.background = isActive ? 'rgba(202,138,4,0.08)' : 'transparent';
+        row.style.background = isActive ? theme.activeHighlight : 'transparent';
         const inner = row.querySelector('.yao-line-inner') as HTMLElement | null;
         if (!inner) return;
         const segs = inner.children as HTMLCollectionOf<HTMLElement>;
-        const color = isActive ? (bits[j] === '1' ? '#CA8A04' : '#D4A520') : (bits[j] === '1' ? '#1C1917' : '#78716C');
+        const color = isActive ? (bits[j] === '1' ? theme.activeLine : theme.activeLineAlt) : (bits[j] === '1' ? theme.yangLine : theme.yinLine);
         for (let k = 0; k < segs.length; k++) {
           segs[k].style.background = color;
           segs[k].style.boxShadow = isActive && bits[j] === '1' ? '0 0 16px rgba(202,138,4,0.35)' : 'none';
@@ -128,7 +128,7 @@ export default function HexagramInteractive({ hex }: { hex: HexagramData | null 
       root.removeEventListener('mouseleave', onLeave as EventListener, true);
       document.removeEventListener('mousemove', onGlobalMove as EventListener, true);
     };
-  }, [hex?.num, hex?.binary, pinnedLine, langMode, lineData, bits]);
+  }, [hex?.num, hex?.binary, pinnedLine, langMode, lineData, bits, theme]);
 
   const handleClick = (i: number) => (e: React.MouseEvent) => {
     e.preventDefault();
@@ -171,11 +171,11 @@ export default function HexagramInteractive({ hex }: { hex: HexagramData | null 
           >
             <div className="yao-line-inner" style={{ display: 'flex', justifyContent: 'center', gap: 6 }}>
               {bits[i] === '1' ? (
-                <div style={{ width: LINE_W, height: LINE_H, background: '#1C1917', borderRadius: 4, transition: 'all 0.2s' }} />
+                <div style={{ width: LINE_W, height: LINE_H, background: theme.yangLine, borderRadius: 4, transition: 'all 0.2s' }} />
               ) : (
                 <>
-                  <div style={{ width: LINE_W * 0.42, height: LINE_H, background: '#78716C', borderRadius: 4, transition: 'all 0.2s' }} />
-                  <div style={{ width: LINE_W * 0.42, height: LINE_H, background: '#78716C', borderRadius: 4, transition: 'all 0.2s' }} />
+                  <div style={{ width: LINE_W * 0.42, height: LINE_H, background: theme.yinLine, borderRadius: 4, transition: 'all 0.2s' }} />
+                  <div style={{ width: LINE_W * 0.42, height: LINE_H, background: theme.yinLine, borderRadius: 4, transition: 'all 0.2s' }} />
                 </>
               )}
             </div>
@@ -196,8 +196,8 @@ export default function HexagramInteractive({ hex }: { hex: HexagramData | null 
           maxWidth: 380,
           padding: '16px 20px',
           borderRadius: 12,
-          background: 'rgba(255,255,255,0.95)',
-          border: '2px solid rgba(202,138,4,0.4)',
+          background: theme.tooltipBg,
+          border: theme.tooltipBorder,
           boxShadow: '0 10px 32px rgba(28,25,23,0.12)',
           zIndex: 1000,
           pointerEvents: 'none',
