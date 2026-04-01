@@ -38,8 +38,8 @@ export default function MasterAvatar({ symbol, imageUrl, size = 120 }: MasterAva
       alignItems: 'center',
       justifyContent: 'center',
       fontSize: size * 0.45,
-      background: 'rgba(0,0,0,0.08)',
-      color: '#1a1a1a',
+      background: 'rgba(128,128,128,0.15)',
+      color: 'inherit',
     }}>
       {symbol}
     </div>

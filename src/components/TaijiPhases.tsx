@@ -120,7 +120,7 @@ export default function TaijiPhases() {
           <p style={{ fontSize: 12, textAlign: 'center', marginBottom: 16, color: theme.sub }}>{i.home.fourImages + ' · 2-bit'}</p>
           <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
             {Object.entries(fourImages).map(([c, info]) => (
-              <div key={c} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px 14px', borderRadius: 12, background: info.flip ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.04)' }}>
+              <div key={c} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px 14px', borderRadius: 12, background: info.flip ? theme.subtleBg : 'transparent' }}>
                 <span style={{ fontFamily: 'monospace', fontSize: 15, color: theme.sub }}>{c}</span>
                 <span style={{ fontSize: 13, color: theme.sub, marginTop: 4 }}>{info.name} · {info.nameEn}</span>
                 {info.flip && <span style={{ fontSize: 11, color: theme.sub, marginTop: 2 }}>{info.t}</span>}
@@ -186,7 +186,7 @@ export default function TaijiPhases() {
               <div key={c} style={{ ...layout.card(theme), padding: 10, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <span style={{ fontSize: 24, color: theme.text }}>{info.symbol}</span>
                 <span style={{ fontSize: 14, marginTop: 4, color: theme.text }}>{info.name}</span>
-                <span style={{ fontSize: 11, fontFamily: 'monospace', color: '#888' }}>{c}</span>
+                <span style={{ fontSize: 11, fontFamily: 'monospace', color: theme.sub }}>{c}</span>
               </div>
             ))}
           </div>
@@ -221,18 +221,18 @@ export default function TaijiPhases() {
                   </div>
                 )}
                 <div style={{ display: 'flex', gap: 14, justifyContent: 'center' }}>
-                  <button type="button" onMouseDown={(e) => { e.preventDefault(); currentTrigram.length < 3 && addLine(1); }} disabled={currentTrigram.length >= 3} style={{ padding: 10, borderRadius: 10, background: 'rgba(255,255,255,0.06)', border: 'none', cursor: currentTrigram.length >= 3 ? 'default' : 'pointer', opacity: currentTrigram.length >= 3 ? 0.3 : 1 }}>
+                  <button type="button" onMouseDown={(e) => { e.preventDefault(); currentTrigram.length < 3 && addLine(1); }} disabled={currentTrigram.length >= 3} style={{ padding: 10, borderRadius: 10, background: theme.subtleBg, border: 'none', cursor: currentTrigram.length >= 3 ? 'default' : 'pointer', opacity: currentTrigram.length >= 3 ? 0.3 : 1 }}>
                     <div style={{ width: 44, height: 8, background: theme.placeholderLine, borderRadius: 4 }} />
                   </button>
-                  <button type="button" onMouseDown={(e) => { e.preventDefault(); currentTrigram.length < 3 && addLine(0); }} disabled={currentTrigram.length >= 3} style={{ padding: 10, borderRadius: 10, background: 'rgba(0,0,0,0.05)', border: 'none', cursor: currentTrigram.length >= 3 ? 'default' : 'pointer', opacity: currentTrigram.length >= 3 ? 0.3 : 1 }}>
+                  <button type="button" onMouseDown={(e) => { e.preventDefault(); currentTrigram.length < 3 && addLine(0); }} disabled={currentTrigram.length >= 3} style={{ padding: 10, borderRadius: 10, background: theme.subtleBg, border: 'none', cursor: currentTrigram.length >= 3 ? 'default' : 'pointer', opacity: currentTrigram.length >= 3 ? 0.3 : 1 }}>
                     <div style={{ display: 'flex', gap: 6 }}>
-                      <div style={{ width: 18, height: 8, background: '#1a1a1a', borderRadius: 4 }} />
-                      <div style={{ width: 18, height: 8, background: '#1a1a1a', borderRadius: 4 }} />
+                      <div style={{ width: 18, height: 8, background: theme.text, borderRadius: 4 }} />
+                      <div style={{ width: 18, height: 8, background: theme.text, borderRadius: 4 }} />
                     </div>
                   </button>
                 </div>
                 {currentTrigram.length === 3 && (
-                  <button type="button" onMouseDown={(e) => { e.preventDefault(); setAsUpper(); }} style={{ marginTop: 14, padding: '6px 18px', borderRadius: 50, fontSize: 13, background: theme.accent, color: '#fff', border: 'none', cursor: 'pointer' }}>{i.home.confirmUpper}</button>
+                  <button type="button" onMouseDown={(e) => { e.preventDefault(); setAsUpper(); }} style={{ marginTop: 14, padding: '6px 18px', borderRadius: 50, fontSize: 13, background: theme.accent, color: theme.bg, border: 'none', cursor: 'pointer' }}>{i.home.confirmUpper}</button>
                 )}
               </div>
             )}
@@ -266,7 +266,7 @@ export default function TaijiPhases() {
         </div>
         <div style={{ display: 'flex', gap: 14 }}>
           <button type="button" onMouseDown={(e) => { e.preventDefault(); resetAll(); }} style={{ padding: '12px 22px', borderRadius: 50, fontSize: 14, color: theme.sub, background: 'transparent', border: `1px solid ${theme.border}`, cursor: 'pointer' }}>{i.common.restart}</button>
-          <button type="button" onMouseDown={(e) => { e.preventDefault(); setUpperTrigram(null); setCurrentTrigram([]); }} style={{ ...layout.btn, background: theme.accent, color: '#fff' }}>{i.home.changeUpper}</button>
+          <button type="button" onMouseDown={(e) => { e.preventDefault(); setUpperTrigram(null); setCurrentTrigram([]); }} style={{ ...layout.btn, background: theme.accent, color: theme.bg }}>{i.home.changeUpper}</button>
         </div>
       </div>
     );

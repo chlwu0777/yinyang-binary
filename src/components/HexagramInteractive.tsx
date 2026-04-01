@@ -207,7 +207,7 @@ export default function HexagramInteractive({ hex }: { hex: HexagramData | null 
         <p className="yao-tooltip-label" style={{ fontSize: 12, color: theme.sub, marginBottom: 8 }} />
         <p className="yao-tooltip-cn" style={{ fontSize: 15, marginBottom: 8, lineHeight: 1.6 }} />
         <p className="yao-tooltip-en" style={{ fontSize: 13, color: theme.sub, lineHeight: 1.5 }} />
-        <div className="yao-tooltip-plain-wrap" style={{ display: 'none', marginTop: 8, paddingTop: 8, borderTop: '1px solid rgba(0,0,0,0.08)' }}>
+        <div className="yao-tooltip-plain-wrap" style={{ display: 'none', marginTop: 8, paddingTop: 8, borderTop: `1px solid ${theme.divider}` }}>
           <p style={{ fontSize: 11, color: theme.sub, marginBottom: 4 }}>白话 · Vernacular</p>
           <p className="yao-tooltip-plain-cn" style={{ fontSize: 13, marginBottom: 4, lineHeight: 1.5 }} />
           <p className="yao-tooltip-plain-en" style={{ fontSize: 12, color: theme.sub, lineHeight: 1.5 }} />
