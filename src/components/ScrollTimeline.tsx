@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import LiquidGlass from 'liquid-glass-react';
 import { timelineMilestones } from '@/data/timeline';
 import { theme } from '@/lib/theme';
 
@@ -71,15 +70,16 @@ function TimelineItem({ milestone, index }: { milestone: typeof timelineMileston
       }} />
 
       {/* Content card */}
-      <LiquidGlass
-        cornerRadius={16}
-        blurAmount={0.06}
-        saturation={120}
-        elasticity={0.12}
-        displacementScale={40}
-        padding="24px 28px"
-        style={{ maxWidth: 440 }}
-      >
+      <div style={{
+        background: theme.card,
+        backdropFilter: 'blur(20px)',
+        borderRadius: 16,
+        padding: '24px 28px',
+        border: `1px solid ${theme.border}`,
+        maxWidth: 440,
+        boxShadow: visible ? '0 8px 32px rgba(0,0,0,0.08)' : 'none',
+        transition: 'box-shadow 0.8s ease',
+      }}>
         {/* Year badge */}
         <div style={{
           display: 'inline-flex',
@@ -88,7 +88,7 @@ function TimelineItem({ milestone, index }: { milestone: typeof timelineMileston
           marginBottom: 12,
           padding: '4px 12px',
           borderRadius: 20,
-          background: 'rgba(96,165,250,0.1)',
+          background: 'rgba(0,0,0,0.05)',
           fontSize: 13,
           color: theme.sub,
         }}>
@@ -118,7 +118,7 @@ function TimelineItem({ milestone, index }: { milestone: typeof timelineMileston
             marginTop: 12,
             padding: '8px 14px',
             borderRadius: 8,
-            background: 'rgba(96,165,250,0.08)',
+            background: 'rgba(0,0,0,0.03)',
             fontFamily: 'monospace',
             fontSize: 15,
             color: theme.accent,
@@ -128,7 +128,7 @@ function TimelineItem({ milestone, index }: { milestone: typeof timelineMileston
             {milestone.binary}
           </div>
         )}
-      </LiquidGlass>
+      </div>
     </div>
   );
 }
@@ -199,15 +199,14 @@ export default function ScrollTimeline() {
       </div>
 
       {/* Ending */}
-      <LiquidGlass
-        cornerRadius={20}
-        blurAmount={0.08}
-        saturation={130}
-        elasticity={0.15}
-        displacementScale={50}
-        padding="40px"
-        style={{ marginTop: 40, textAlign: 'center' }}
-      >
+      <div style={{
+        textAlign: 'center',
+        marginTop: 40,
+        padding: 40,
+        borderRadius: 20,
+        background: theme.card,
+        border: `1px solid ${theme.border}`,
+      }}>
         <p style={{ fontSize: 28, fontWeight: 300, marginBottom: 12, color: theme.text }}>☯ → 01</p>
         <p style={{ fontSize: 15, color: theme.sub, lineHeight: 1.8 }}>
           从太极的浑然一体，到阴阳的二元分立，<br />
@@ -219,7 +218,7 @@ export default function ScrollTimeline() {
           from Fu Xi&apos;s trigrams to trillions of transistors.<br />
           The story of 0 and 1 spans five millennia.
         </p>
-      </LiquidGlass>
+      </div>
     </section>
   );
 }

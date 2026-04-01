@@ -7,8 +7,6 @@ import LinesSection from '@/components/LinesSection';
 import { hexagramsData, type HexagramData } from '@/data/hexagrams';
 import { trigramInfo } from '@/data/trigrams';
 import { theme, s } from '@/lib/theme';
-import GlassCard from '@/components/ui/GlassCard';
-import GlassButton from '@/components/ui/GlassButton';
 import { useHexLangMode, useSetHexLangMode } from '@/contexts/AppProviders';
 
 export default function HexagramsPage() {
@@ -31,22 +29,22 @@ export default function HexagramsPage() {
       <div style={{ display: 'flex', gap: 12, marginBottom: 20, flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
         <div style={{ display: 'flex', gap: 6 }}>
           {(['both', 'cn', 'en'] as const).map((mode) => (
-            <button key={mode} type="button" onMouseDown={(e) => { e.preventDefault(); setHexLangMode(mode); }} style={{ padding: '8px 16px', borderRadius: 8, border: `1px solid ${theme.border}`, background: hexLangMode === mode ? 'rgba(96,165,250,0.3)' : 'rgba(255,255,255,0.04)', color: hexLangMode === mode ? '#fff' : theme.sub, fontSize: 14, cursor: 'pointer' }}>
+            <button key={mode} type="button" onMouseDown={(e) => { e.preventDefault(); setHexLangMode(mode); }} style={{ padding: '8px 16px', borderRadius: 8, border: `1px solid ${theme.border}`, background: hexLangMode === mode ? theme.accent : theme.card, color: hexLangMode === mode ? '#fff' : theme.sub, fontSize: 14, cursor: 'pointer' }}>
               {mode === 'both' ? '中英' : mode === 'cn' ? '中文' : 'English'}
             </button>
           ))}
         </div>
-        <button type="button" onMouseDown={(e) => { e.preventDefault(); randomHexagram(); }} style={{ padding: '8px 20px', borderRadius: 8, border: `1px solid ${theme.accent}`, background: 'rgba(96,165,250,0.3)', color: '#fff', fontSize: 14, cursor: 'pointer' }}>随机一卦</button>
+        <button type="button" onMouseDown={(e) => { e.preventDefault(); randomHexagram(); }} style={{ padding: '8px 20px', borderRadius: 8, border: `1px solid ${theme.accent}`, background: theme.accent, color: '#fff', fontSize: 14, cursor: 'pointer' }}>随机一卦</button>
       </div>
       {selectedHexagram ? (
-        <GlassCard>
+        <div style={s.card}>
           <div style={{ marginBottom: 28, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             <button type="button" onMouseDown={(e) => { e.preventDefault(); setSelectedHexagram(null); }} style={{ background: 'none', border: 'none', fontSize: 14, color: theme.sub, cursor: 'pointer' }}>← 返回 Back</button>
-            <button type="button" onMouseDown={(e) => { e.preventDefault(); randomHexagram(); }} style={{ padding: '6px 14px', borderRadius: 6, border: `1px solid ${theme.accent}`, background: 'rgba(96,165,250,0.3)', color: '#fff', fontSize: 13, cursor: 'pointer' }}>随机一卦</button>
+            <button type="button" onMouseDown={(e) => { e.preventDefault(); randomHexagram(); }} style={{ padding: '6px 14px', borderRadius: 6, border: `1px solid ${theme.accent}`, background: theme.accent, color: '#fff', fontSize: 13, cursor: 'pointer' }}>随机一卦</button>
           </div>
           <div style={{ display: 'flex', gap: 36, flexWrap: 'wrap', alignItems: 'flex-start' }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', overflow: 'visible' }}>
-              <div style={{ padding: '20px 20px 20px 24px', borderRadius: 12, marginBottom: 18, background: 'rgba(255,255,255,0.04)', overflow: 'visible', display: 'inline-block' }}>
+              <div style={{ padding: '20px 20px 20px 24px', borderRadius: 12, marginBottom: 18, background: 'rgba(0,0,0,0.03)', overflow: 'visible', display: 'inline-block' }}>
                 <HexagramInteractive hex={selectedHexagram} />
               </div>
               <p style={{ fontSize: 12, color: theme.sub, marginBottom: 8 }}>鼠标悬停爻线查看释义 Hover over lines for line statements</p>
@@ -66,20 +64,20 @@ export default function HexagramsPage() {
               </div>
             </div>
             <div style={{ flex: 1, minWidth: 280 }}>
-              <span style={{ display: 'inline-block', fontSize: 14, padding: '6px 16px', borderRadius: 50, background: 'rgba(96,165,250,0.3)', color: '#fff' }}>第 {selectedHexagram.num} 卦 Hexagram {selectedHexagram.num}</span>
+              <span style={{ display: 'inline-block', fontSize: 14, padding: '6px 16px', borderRadius: 50, background: theme.accent, color: '#fff' }}>第 {selectedHexagram.num} 卦 Hexagram {selectedHexagram.num}</span>
               <h2 style={{ fontSize: 52, marginTop: 18, marginBottom: 10 }}>{selectedHexagram.name}</h2>
               <p style={{ fontSize: 26, marginBottom: 6, color: theme.sub }}>{selectedHexagram.nameEn}</p>
               <p style={{ fontSize: 18, marginBottom: 20, color: '#888' }}>{selectedHexagram.meaning} · {selectedHexagram.meaningEn}</p>
-              <div style={{ padding: 18, borderRadius: 12, marginBottom: 18, background: 'rgba(255,255,255,0.05)', border: `1px solid ${theme.border}` }}>
+              <div style={{ padding: 18, borderRadius: 12, marginBottom: 18, background: 'rgba(0,0,0,0.04)', border: `1px solid ${theme.border}` }}>
                 <p style={{ fontSize: 12, marginBottom: 6, color: theme.sub }}>系统状态 System State</p>
                 <p style={{ fontSize: 20, fontFamily: 'monospace', color: theme.text }}>{selectedHexagram.state}</p>
                 <p style={{ fontSize: 14, marginTop: 6 }}>{selectedHexagram.desc} · {selectedHexagram.descEn}</p>
               </div>
-              <div style={{ padding: 18, borderRadius: 12, marginBottom: 18, background: 'rgba(255,255,255,0.04)' }}>
+              <div style={{ padding: 18, borderRadius: 12, marginBottom: 18, background: 'rgba(0,0,0,0.03)' }}>
                 <p style={{ fontSize: 12, marginBottom: 10, color: '#999' }}>关键词 Keywords</p>
                 <p style={{ fontSize: 15 }}>{selectedHexagram.kw} · {selectedHexagram.kwEn}</p>
               </div>
-              <div style={{ padding: 18, borderRadius: 12, background: 'rgba(255,255,255,0.03)', borderLeft: `4px solid ${theme.border}` }}>
+              <div style={{ padding: 18, borderRadius: 12, background: 'rgba(0,0,0,0.02)', borderLeft: `4px solid ${theme.border}` }}>
                 <p style={{ fontSize: 12, marginBottom: 10, color: '#999' }}>象辞 Image Statement</p>
                 <p style={{ fontStyle: 'italic', fontSize: 15 }}>{selectedHexagram.img} · {selectedHexagram.imgEn}</p>
               </div>
@@ -88,7 +86,7 @@ export default function HexagramsPage() {
               </div>
             </div>
           </div>
-        </GlassCard>
+        </div>
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gap: 8 }}>
           {hexagramsData.map((h) => (
@@ -101,7 +99,7 @@ export default function HexagramsPage() {
               style={{
                 padding: 10, borderRadius: 10,
                 border: hoveredNode === h.num ? `2px solid ${theme.accent}` : `1px solid ${theme.border}`,
-                background: hoveredNode === h.num ? 'rgba(96,165,250,0.12)' : 'rgba(255,255,255,0.04)',
+                background: hoveredNode === h.num ? 'rgba(0,0,0,0.06)' : theme.card,
                 cursor: 'pointer', transition: 'all 0.2s',
                 transform: hoveredNode === h.num ? 'scale(1.12)' : 'scale(1)',
                 zIndex: hoveredNode === h.num ? 10 : 1,

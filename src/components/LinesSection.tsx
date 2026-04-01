@@ -45,7 +45,7 @@ export default function LinesSection({ hex, compact = false }: { hex: HexagramDa
                 {showCn && <span>{lines[idx].cn}</span>}
                 {showEn && <div style={{ fontSize: 11, color: theme.sub, marginTop: 2 }}>{lines[idx].en}</div>}
                 {(lines[idx].plainCn || lines[idx].plainEn) && (showCn || showEn) && (
-                  <div style={{ fontSize: 11, color: theme.sub, marginTop: 4, paddingTop: 4, borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+                  <div style={{ fontSize: 11, color: theme.sub, marginTop: 4, paddingTop: 4, borderTop: '1px solid rgba(0,0,0,0.06)' }}>
                     {showCn && lines[idx].plainCn && <div>白话 Vernacular: {lines[idx].plainCn}</div>}
                     {showEn && lines[idx].plainEn && <div style={{ marginTop: 2 }}>Vernacular: {lines[idx].plainEn}</div>}
                   </div>
@@ -59,14 +59,14 @@ export default function LinesSection({ hex, compact = false }: { hex: HexagramDa
   }
 
   return (
-    <div style={{ padding: 18, borderRadius: 12, background: 'rgba(255,255,255,0.04)', border: `1px solid ${theme.border}` }}>
+    <div style={{ padding: 18, borderRadius: 12, background: 'rgba(0,0,0,0.02)', border: `1px solid ${theme.border}` }}>
       <p style={{ fontSize: 13, fontWeight: 500, marginBottom: 4, color: theme.text }}>六爻释义 / Line-by-Line</p>
       <p style={{ fontSize: 12, color: theme.sub, marginBottom: 14, lineHeight: 1.5 }}>每一卦描述事物的发展过程，自初爻至上爻依次递进。从下往上读，体会变化脉络。 / Each hexagram describes a process; read bottom to top.</p>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
         {order.map((idx, i) => (
           <React.Fragment key={idx}>
             {i > 0 && <ArrowUp />}
-            <div style={{ padding: '10px 12px', borderRadius: 8, background: 'rgba(255,255,255,0.04)' }}>
+            <div style={{ padding: '10px 12px', borderRadius: 8, background: 'rgba(255,255,255,0.5)' }}>
               <p style={{ fontSize: 12, color: theme.sub, marginBottom: 4 }}>{LINE_LABELS[idx]} →</p>
               {showCn && <p style={{ fontSize: 14, marginBottom: 4 }}>{lines[idx].cn}</p>}
               {showEn && <p style={{ fontSize: 13, color: theme.sub, lineHeight: 1.5 }}>{lines[idx].en}</p>}
