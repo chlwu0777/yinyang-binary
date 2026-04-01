@@ -15,14 +15,20 @@ export default function MasterAvatar({ symbol, imageUrl, size = 120, name }: Mas
   const isCircle = size === 88;
 
   if (imageUrl && !imgFailed) {
+    // Request 2x resolution for Retina displays
+    const renderSize = size * 2;
     return (
       <Image
         src={imageUrl}
         alt={name ? `Portrait of ${name}` : 'Master portrait'}
-        width={size}
-        height={size}
+        width={renderSize}
+        height={renderSize}
+        quality={95}
+        unoptimized
         onError={() => setImgFailed(true)}
         style={{
+          width: size,
+          height: size,
           objectFit: 'cover',
           borderRadius: isCircle ? '50%' : 24,
         }}
