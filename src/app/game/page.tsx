@@ -97,7 +97,7 @@ export default function GamePage() {
                 </div>
               ))}
             </div>
-            <div style={{ borderTop: '1px solid #333', margin: '18px 0' }} />
+            <div style={{ borderTop: '1px solid #E7E5E4', margin: '18px 0' }} />
             <div style={{ display: 'flex', flexDirection: 'column-reverse', gap: 14 }}>
               {[0, 1, 2].map((p) => (
                 <div key={p} style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
@@ -109,15 +109,15 @@ export default function GamePage() {
             <p style={{ fontSize: 12, color: '#888', marginTop: 10, textAlign: 'center' }}>下卦 Lower · {trigramInfo[toBinary(lower, 3)]?.name}</p>
           </div>
           <div style={{ ...s.card, padding: 28, minWidth: 220 }}>
-            <p style={{ fontFamily: 'monospace', fontSize: 32, letterSpacing: 6, color: theme.text, marginBottom: 10, textAlign: 'center' }}>{toBinary(gameState)}</p>
+            <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 32, letterSpacing: 6, color: theme.text, marginBottom: 10, textAlign: 'center' }}>{toBinary(gameState)}</p>
             <p style={{ fontSize: 13, color: theme.sub, textAlign: 'center', marginBottom: 20 }}>十进制 Decimal: {gameState}</p>
             {info && (
               <div style={{ textAlign: 'center' }}>
                 <p style={{ fontSize: 48, marginBottom: 6 }}>{info.name}</p>
                 <p style={{ fontSize: 20, color: theme.sub, marginBottom: 6 }}>{info.nameEn}</p>
                 <p style={{ fontSize: 14, color: theme.sub, marginBottom: 16 }}>#{info.num}</p>
-                <div style={{ padding: '14px 18px', borderRadius: 12, background: 'rgba(0,0,0,0.04)', border: `1px solid ${theme.border}` }}>
-                  <p style={{ fontSize: 15, fontFamily: 'monospace', color: theme.text }}>{info.state}</p>
+                <div style={{ padding: '14px 18px', borderRadius: 12, background: 'rgba(28,25,23,0.04)', border: `1px solid ${theme.border}` }}>
+                  <p style={{ fontSize: 15, fontFamily: "'JetBrains Mono', monospace", color: theme.text }}>{info.state}</p>
                   <p style={{ fontSize: 13, color: theme.sub, marginTop: 6 }}>{info.desc} · {info.descEn}</p>
                 </div>
                 <div style={{ marginTop: 16, textAlign: 'left' }}>
@@ -125,7 +125,7 @@ export default function GamePage() {
                 </div>
               </div>
             )}
-            <div style={{ marginTop: 20, paddingTop: 20, borderTop: '1px solid #333' }}>
+            <div style={{ marginTop: 20, paddingTop: 20, borderTop: '1px solid #E7E5E4' }}>
               <p style={{ fontSize: 13, color: '#888' }}>步数 Moves: {moves}</p>
               <button type="button" onMouseDown={(e) => { e.preventDefault(); setGameState(0); setMoves(0); }} style={{ marginTop: 10, background: 'none', border: 'none', fontSize: 13, color: '#aaa', cursor: 'pointer' }}>重置 Reset</button>
             </div>
@@ -180,7 +180,7 @@ export default function GamePage() {
             <div style={{ display: 'flex', flexDirection: 'column-reverse', gap: 10, marginBottom: 18 }}>
               {[0, 1, 2, 3, 4, 5].map((p) => <GameBitLine key={p} value={getBit(gameState, p)} position={p} canFlip={!isWin && !isLose} isAnimating={animatingBit === p} onFlip={flipBit} />)}
             </div>
-            <p style={{ fontFamily: 'monospace', fontSize: 22, color: theme.text, textAlign: 'center' }}>{toBinary(gameState)}</p>
+            <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 22, color: theme.text, textAlign: 'center' }}>{toBinary(gameState)}</p>
             <p style={{ fontSize: 20, textAlign: 'center', marginTop: 10 }}>{info?.name}</p>
             {info && <div style={{ marginTop: 14 }}><LinesSection hex={info} compact={true} /></div>}
           </div>
@@ -193,14 +193,14 @@ export default function GamePage() {
             <div style={{ display: 'flex', flexDirection: 'column-reverse', gap: 10, marginBottom: 18 }}>
               {[0, 1, 2, 3, 4, 5].map((p) => <GameBitLine key={p} value={getBit(targetState!, p)} position={p} canFlip={false} isAnimating={false} />)}
             </div>
-            <p style={{ fontFamily: 'monospace', fontSize: 22, color: theme.sub, textAlign: 'center' }}>{toBinary(targetState!)}</p>
+            <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 22, color: theme.sub, textAlign: 'center' }}>{toBinary(targetState!)}</p>
             <p style={{ fontSize: 20, textAlign: 'center', marginTop: 10 }}>{targetInfo?.name}</p>
           </div>
         </div>
         <div style={{ marginTop: 36, display: 'flex', gap: 36, textAlign: 'center' }}>
-          <div><p style={{ fontSize: 28, fontFamily: 'monospace', color: theme.text }}>{moves}</p><p style={{ fontSize: 13, color: theme.sub }}>已用 Used</p></div>
-          <div><p style={{ fontSize: 28, fontFamily: 'monospace', color: theme.text }}>{maxMoves}</p><p style={{ fontSize: 13, color: theme.sub }}>上限 Max</p></div>
-          <div><p style={{ fontSize: 28, fontFamily: 'monospace', color: maxMoves! - moves >= distance ? theme.text : theme.sub }}>{maxMoves! - moves}</p><p style={{ fontSize: 13, color: theme.sub }}>剩余 Left</p></div>
+          <div><p style={{ fontSize: 28, fontFamily: "'JetBrains Mono', monospace", color: theme.text }}>{moves}</p><p style={{ fontSize: 13, color: theme.sub }}>已用 Used</p></div>
+          <div><p style={{ fontSize: 28, fontFamily: "'JetBrains Mono', monospace", color: theme.text }}>{maxMoves}</p><p style={{ fontSize: 13, color: theme.sub }}>上限 Max</p></div>
+          <div><p style={{ fontSize: 28, fontFamily: "'JetBrains Mono', monospace", color: maxMoves! - moves >= distance ? theme.text : theme.sub }}>{maxMoves! - moves}</p><p style={{ fontSize: 13, color: theme.sub }}>剩余 Left</p></div>
         </div>
         <button type="button" onMouseDown={(e) => { e.preventDefault(); resetGame('puzzle', level); }} style={{ marginTop: 20, background: 'none', border: 'none', fontSize: 13, color: '#888', cursor: 'pointer' }}>重置本关 Reset Level</button>
       </div>
@@ -222,7 +222,7 @@ export default function GamePage() {
               return (
                 <button type="button" key={h.num} onMouseDown={(e) => { e.preventDefault(); setExplorerSelected(v); }} style={{ aspectRatio: '1', padding: 6, borderRadius: 10, cursor: 'pointer', background: explorerSelected === v ? 'rgba(0,0,0,0.08)' : theme.card, border: explorerSelected === v ? `2px solid ${theme.accent}` : `1px solid ${theme.border}`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                   <p style={{ fontSize: 20, color: theme.text }}>{h.name}</p>
-                  <p style={{ fontSize: 11, fontFamily: 'monospace', color: theme.sub }}>{v}</p>
+                  <p style={{ fontSize: 11, fontFamily: "'JetBrains Mono', monospace", color: theme.sub }}>{v}</p>
                 </button>
               );
             })}
@@ -232,7 +232,7 @@ export default function GamePage() {
               <div style={{ display: 'flex', gap: 36, alignItems: 'flex-start', flexWrap: 'wrap' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <Hexagram binary={toBinary(explorerSelected)} size="normal" glow={true} />
-                  <p style={{ fontFamily: 'monospace', color: theme.text, marginTop: 12, fontSize: 18 }}>{toBinary(explorerSelected)}</p>
+                  <p style={{ fontFamily: "'JetBrains Mono', monospace", color: theme.text, marginTop: 12, fontSize: 18 }}>{toBinary(explorerSelected)}</p>
                   <p style={{ fontSize: 15, color: theme.text, marginTop: 6 }}>{getHexInfo(explorerSelected)?.name} · {getHexInfo(explorerSelected)?.nameEn}</p>
                 </div>
                 <div style={{ flex: 1, minWidth: 200 }}>
@@ -242,7 +242,7 @@ export default function GamePage() {
                       const adj = explorerSelected ^ (1 << bit);
                       const adjInfo = getHexInfo(adj);
                       return (
-                        <button type="button" key={bit} onMouseDown={(e) => { e.preventDefault(); setExplorerSelected(adj); }} style={{ padding: '6px 14px', borderRadius: 10, fontSize: 14, background: 'rgba(0,0,0,0.06)', border: `1px solid ${theme.border}`, cursor: 'pointer' }}>
+                        <button type="button" key={bit} onMouseDown={(e) => { e.preventDefault(); setExplorerSelected(adj); }} style={{ padding: '6px 14px', borderRadius: 10, fontSize: 14, background: 'rgba(28,25,23,0.05)', border: `1px solid ${theme.border}`, cursor: 'pointer' }}>
                           <span style={{ color: theme.text }}>{adjInfo?.name}</span>
                           <span style={{ fontSize: 12, color: theme.sub, marginLeft: 6 }}>({adj})</span>
                         </button>

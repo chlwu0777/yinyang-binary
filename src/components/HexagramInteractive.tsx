@@ -42,14 +42,14 @@ export default function HexagramInteractive({ hex }: { hex: HexagramData | null 
       const active = index !== null ? index : currentPinned;
       rows.forEach((row, j) => {
         const isActive = active === j;
-        row.style.background = isActive ? 'rgba(0,102,204,0.15)' : 'transparent';
+        row.style.background = isActive ? 'rgba(202,138,4,0.08)' : 'transparent';
         const inner = row.querySelector('.yao-line-inner') as HTMLElement | null;
         if (!inner) return;
         const segs = inner.children as HTMLCollectionOf<HTMLElement>;
-        const color = isActive ? (bits[j] === '1' ? '#0066cc' : '#3388cc') : (bits[j] === '1' ? '#2a2a2a' : '#555');
+        const color = isActive ? (bits[j] === '1' ? '#CA8A04' : '#D4A520') : (bits[j] === '1' ? '#1C1917' : '#78716C');
         for (let k = 0; k < segs.length; k++) {
           segs[k].style.background = color;
-          segs[k].style.boxShadow = isActive && bits[j] === '1' ? '0 0 16px rgba(0,102,204,0.5)' : 'none';
+          segs[k].style.boxShadow = isActive && bits[j] === '1' ? '0 0 16px rgba(202,138,4,0.35)' : 'none';
         }
       });
       if (active !== null && tooltipEl && rows[active]) {
@@ -171,11 +171,11 @@ export default function HexagramInteractive({ hex }: { hex: HexagramData | null 
           >
             <div className="yao-line-inner" style={{ display: 'flex', justifyContent: 'center', gap: 6 }}>
               {bits[i] === '1' ? (
-                <div style={{ width: LINE_W, height: LINE_H, background: '#2a2a2a', borderRadius: 4, transition: 'all 0.2s' }} />
+                <div style={{ width: LINE_W, height: LINE_H, background: '#1C1917', borderRadius: 4, transition: 'all 0.2s' }} />
               ) : (
                 <>
-                  <div style={{ width: LINE_W * 0.42, height: LINE_H, background: '#555', borderRadius: 4, transition: 'all 0.2s' }} />
-                  <div style={{ width: LINE_W * 0.42, height: LINE_H, background: '#555', borderRadius: 4, transition: 'all 0.2s' }} />
+                  <div style={{ width: LINE_W * 0.42, height: LINE_H, background: '#78716C', borderRadius: 4, transition: 'all 0.2s' }} />
+                  <div style={{ width: LINE_W * 0.42, height: LINE_H, background: '#78716C', borderRadius: 4, transition: 'all 0.2s' }} />
                 </>
               )}
             </div>
@@ -196,9 +196,9 @@ export default function HexagramInteractive({ hex }: { hex: HexagramData | null 
           maxWidth: 380,
           padding: '16px 20px',
           borderRadius: 12,
-          background: theme.card,
-          border: '2px solid rgba(0,102,204,0.5)',
-          boxShadow: '0 10px 32px rgba(0,0,0,0.15)',
+          background: 'rgba(255,255,255,0.95)',
+          border: '2px solid rgba(202,138,4,0.4)',
+          boxShadow: '0 10px 32px rgba(28,25,23,0.12)',
           zIndex: 1000,
           pointerEvents: 'none',
         }}

@@ -19,7 +19,7 @@ export default function MastersPage() {
           <button type="button" onMouseDown={(e) => { e.preventDefault(); setSelectedMaster(null); }} style={{ marginBottom: 28, background: 'none', border: 'none', fontSize: 14, color: theme.sub, cursor: 'pointer' }}>← 返回 Back</button>
           <div style={{ display: 'flex', gap: 36, flexWrap: 'wrap', alignItems: 'flex-start' }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <div style={{ width: 160, height: 160, borderRadius: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16, background: 'rgba(0,0,0,0.02)', overflow: 'hidden' }}>
+              <div style={{ width: 160, height: 160, borderRadius: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16, background: 'rgba(28,25,23,0.02)', overflow: 'hidden' }}>
                 <MasterAvatar symbol={selectedMaster.avatar} imageUrl={selectedMaster.portrait} size={140} />
               </div>
               <p style={{ fontSize: 13, color: '#999' }}>{selectedMaster.era}</p>
@@ -28,8 +28,8 @@ export default function MastersPage() {
             <div style={{ flex: 1, minWidth: 280 }}>
               <h2 style={{ fontSize: 32, marginBottom: 6 }}>{selectedMaster.name}</h2>
               <p style={{ fontSize: 22, marginBottom: 12, color: theme.sub }}>{selectedMaster.nameEn}</p>
-              <p style={{ display: 'inline-block', fontSize: 14, marginBottom: 20, padding: '6px 16px', borderRadius: 50, background: 'rgba(0,0,0,0.05)', color: theme.sub }}>{selectedMaster.title} · {selectedMaster.titleEn}</p>
-              <blockquote style={{ margin: '24px 0', padding: 20, borderRadius: 12, fontStyle: 'italic', background: 'rgba(0,0,0,0.02)', borderLeft: `4px solid ${theme.border}` }}>
+              <p style={{ display: 'inline-block', fontSize: 14, marginBottom: 20, padding: '6px 16px', borderRadius: 50, background: 'rgba(28,25,23,0.04)', color: theme.sub }}>{selectedMaster.title} · {selectedMaster.titleEn}</p>
+              <blockquote style={{ margin: '24px 0', padding: 20, borderRadius: 12, fontStyle: 'italic', background: 'rgba(28,25,23,0.02)', borderLeft: `4px solid ${theme.border}` }}>
                 <p style={{ fontSize: 16 }}>{selectedMaster.quote}</p>
                 <p style={{ fontSize: 14, marginTop: 10, color: theme.sub }}>{selectedMaster.quoteEn}</p>
               </blockquote>
@@ -38,7 +38,7 @@ export default function MastersPage() {
                 <p style={{ fontSize: 14, lineHeight: 1.8, color: theme.sub }}>{selectedMaster.descriptionEn}</p>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16 }}>
-                <div style={{ padding: 18, borderRadius: 12, background: 'rgba(0,0,0,0.03)' }}>
+                <div style={{ padding: 18, borderRadius: 12, background: 'rgba(28,25,23,0.03)' }}>
                   <p style={{ fontSize: 12, marginBottom: 10, color: '#999' }}>主要贡献 Main Contribution</p>
                   <p style={{ fontSize: 15 }}>{selectedMaster.contribution}</p>
                   <p style={{ fontSize: 13, marginTop: 6, color: theme.sub }}>{selectedMaster.contributionEn}</p>
@@ -57,7 +57,7 @@ export default function MastersPage() {
           {masters.map((m) => (
             <button type="button" key={m.id} onMouseDown={(e) => { e.preventDefault(); setSelectedMaster(m); }} style={{ ...s.card, padding: 24, cursor: 'pointer', border: `1px solid ${theme.border}`, textAlign: 'left' as const }}>
               <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 18 }}>
-                <div style={{ width: 88, height: 88, borderRadius: '50%', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#1a1a1a' }}>
+                <div style={{ width: 88, height: 88, borderRadius: '50%', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#1C1917' }}>
                   <MasterAvatar symbol={m.avatar} imageUrl={m.portrait} size={88} />
                 </div>
               </div>

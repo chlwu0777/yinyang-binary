@@ -88,7 +88,7 @@ function TimelineItem({ milestone, index }: { milestone: typeof timelineMileston
           marginBottom: 12,
           padding: '4px 12px',
           borderRadius: 20,
-          background: 'rgba(0,0,0,0.05)',
+          background: 'rgba(202,138,4,0.06)',
           fontSize: 13,
           color: theme.sub,
         }}>
@@ -118,7 +118,7 @@ function TimelineItem({ milestone, index }: { milestone: typeof timelineMileston
             marginTop: 12,
             padding: '8px 14px',
             borderRadius: 8,
-            background: 'rgba(0,0,0,0.03)',
+            background: 'rgba(202,138,4,0.05)',
             fontFamily: 'monospace',
             fontSize: 15,
             color: theme.accent,

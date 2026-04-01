@@ -70,11 +70,11 @@ export default function TaijiPhases() {
         </div>
         <div style={{ position: 'relative', width: 320, height: 200 }}>
           <div style={{ position: 'absolute', left: `calc(50% - ${sp}px - 45px)`, top: '50%', transform: 'translateY(-50%)', opacity: separationProgress }}>
-            <div style={{ width: 90, height: 14, background: '#888', borderRadius: 7 }} />
+            <div style={{ width: 90, height: 14, background: '#A8A29E', borderRadius: 7 }} />
           </div>
           <div style={{ position: 'absolute', left: `calc(50% + ${sp}px - 45px)`, top: '50%', transform: 'translateY(-50%)', opacity: separationProgress, display: 'flex', gap: 14 }}>
-            <div style={{ width: 36, height: 14, background: '#888', borderRadius: 7 }} />
-            <div style={{ width: 36, height: 14, background: '#888', borderRadius: 7 }} />
+            <div style={{ width: 36, height: 14, background: '#A8A29E', borderRadius: 7 }} />
+            <div style={{ width: 36, height: 14, background: '#A8A29E', borderRadius: 7 }} />
           </div>
           <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', opacity: 1 - separationProgress }}>
             <Taiji size={120} rotation={rotation} />
@@ -93,7 +93,7 @@ export default function TaijiPhases() {
         </div>
         <div style={{ display: 'flex', gap: 32, marginBottom: 32, flexWrap: 'wrap', justifyContent: 'center' }}>
           <button type="button" onMouseDown={(e) => { e.preventDefault(); setHomePhase(2); }} style={{ ...s.card, cursor: 'pointer', border: 'none', minWidth: 140 }}>
-            <div style={{ width: 80, height: 14, background: '#888', borderRadius: 7, margin: '0 auto' }} />
+            <div style={{ width: 80, height: 14, background: '#A8A29E', borderRadius: 7, margin: '0 auto' }} />
             <div style={{ textAlign: 'center', marginTop: 20 }}>
               <p style={{ fontSize: 22 }}>阳 Yang</p>
               <p style={{ fontSize: 36, fontFamily: 'monospace', fontWeight: 'bold', opacity: 0.6 }}>1</p>
@@ -101,8 +101,8 @@ export default function TaijiPhases() {
           </button>
           <button type="button" onMouseDown={(e) => { e.preventDefault(); setHomePhase(2); }} style={{ ...s.card, cursor: 'pointer', border: 'none', minWidth: 140 }}>
             <div style={{ display: 'flex', gap: 14, justifyContent: 'center' }}>
-              <div style={{ width: 32, height: 14, background: '#888', borderRadius: 7 }} />
-              <div style={{ width: 32, height: 14, background: '#888', borderRadius: 7 }} />
+              <div style={{ width: 32, height: 14, background: '#A8A29E', borderRadius: 7 }} />
+              <div style={{ width: 32, height: 14, background: '#A8A29E', borderRadius: 7 }} />
             </div>
             <div style={{ textAlign: 'center', marginTop: 20 }}>
               <p style={{ fontSize: 22 }}>阴 Yin</p>
@@ -158,20 +158,20 @@ export default function TaijiPhases() {
         </div>
         <div style={{ display: 'flex', gap: 16, marginBottom: 20 }}>
           <button type="button" onMouseDown={(e) => { e.preventDefault(); currentTrigram.length < 3 && addLine(1); }} disabled={currentTrigram.length >= 3} style={{ ...s.card, padding: 18, cursor: currentTrigram.length >= 3 ? 'default' : 'pointer', opacity: currentTrigram.length >= 3 ? 0.3 : 1, border: 'none' }}>
-            <div style={{ width: 56, height: 10, background: '#888', borderRadius: 5, margin: '0 auto' }} />
+            <div style={{ width: 56, height: 10, background: '#A8A29E', borderRadius: 5, margin: '0 auto' }} />
             <span style={{ display: 'block', fontSize: 14, marginTop: 10, color: theme.sub }}>阳 Yang (1)</span>
           </button>
           <button type="button" onMouseDown={(e) => { e.preventDefault(); currentTrigram.length < 3 && addLine(0); }} disabled={currentTrigram.length >= 3} style={{ ...s.card, padding: 18, cursor: currentTrigram.length >= 3 ? 'default' : 'pointer', opacity: currentTrigram.length >= 3 ? 0.3 : 1, border: 'none' }}>
             <div style={{ display: 'flex', gap: 10, justifyContent: 'center' }}>
-              <div style={{ width: 22, height: 10, background: '#888', borderRadius: 5 }} />
-              <div style={{ width: 22, height: 10, background: '#888', borderRadius: 5 }} />
+              <div style={{ width: 22, height: 10, background: '#A8A29E', borderRadius: 5 }} />
+              <div style={{ width: 22, height: 10, background: '#A8A29E', borderRadius: 5 }} />
             </div>
             <span style={{ display: 'block', fontSize: 14, marginTop: 10, color: theme.sub }}>阴 Yin (0)</span>
           </button>
         </div>
         <div style={{ display: 'flex', gap: 12 }}>
           <button type="button" onMouseDown={(e) => { e.preventDefault(); setCurrentTrigram([]); }} style={{ padding: '10px 20px', background: 'none', border: 'none', fontSize: 14, color: theme.sub, cursor: 'pointer' }}>重置 Reset</button>
-          {currentTrigram.length === 3 && <button type="button" onMouseDown={(e) => { e.preventDefault(); setAsLower(); }} style={{ ...s.btn, background: '#1a1a1a', color: '#fff' }}>设为下卦 Set as Lower →</button>}
+          {currentTrigram.length === 3 && <button type="button" onMouseDown={(e) => { e.preventDefault(); setAsLower(); }} style={{ ...s.btn, background: '#1C1917', color: '#fff' }}>设为下卦 Set as Lower →</button>}
         </div>
         <div style={{ marginTop: 36, maxWidth: 380 }}>
           <p style={{ fontSize: 12, textAlign: 'center', marginBottom: 14, color: '#999' }}>八卦 Eight Trigrams · 3-bit</p>
@@ -216,7 +216,7 @@ export default function TaijiPhases() {
                 )}
                 <div style={{ display: 'flex', gap: 14, justifyContent: 'center' }}>
                   <button type="button" onMouseDown={(e) => { e.preventDefault(); currentTrigram.length < 3 && addLine(1); }} disabled={currentTrigram.length >= 3} style={{ padding: 10, borderRadius: 10, background: 'rgba(255,255,255,0.06)', border: 'none', cursor: currentTrigram.length >= 3 ? 'default' : 'pointer', opacity: currentTrigram.length >= 3 ? 0.3 : 1 }}>
-                    <div style={{ width: 44, height: 8, background: '#888', borderRadius: 4 }} />
+                    <div style={{ width: 44, height: 8, background: '#A8A29E', borderRadius: 4 }} />
                   </button>
                   <button type="button" onMouseDown={(e) => { e.preventDefault(); currentTrigram.length < 3 && addLine(0); }} disabled={currentTrigram.length >= 3} style={{ padding: 10, borderRadius: 10, background: 'rgba(0,0,0,0.05)', border: 'none', cursor: currentTrigram.length >= 3 ? 'default' : 'pointer', opacity: currentTrigram.length >= 3 ? 0.3 : 1 }}>
                     <div style={{ display: 'flex', gap: 6 }}>
@@ -245,7 +245,7 @@ export default function TaijiPhases() {
                   <>
                     <p style={{ fontSize: 32, marginTop: 12 }}>第 {hexData.num} 卦 Hexagram {hexData.num} · {hexData.name}</p>
                     <p style={{ fontSize: 18, color: theme.sub }}>{hexData.nameEn} · {hexData.meaning}</p>
-                    <div style={{ marginTop: 18, padding: 14, borderRadius: 12, background: 'rgba(0,136,255,0.06)' }}>
+                    <div style={{ marginTop: 18, padding: 14, borderRadius: 12, background: 'rgba(202,138,4,0.06)' }}>
                       <p style={{ fontSize: 14, fontFamily: 'monospace', color: theme.accent }}>{hexData.state}</p>
                       <p style={{ fontSize: 14, color: theme.sub, marginTop: 4 }}>{hexData.desc} · {hexData.descEn}</p>
                     </div>

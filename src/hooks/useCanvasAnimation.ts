@@ -49,63 +49,114 @@ export function useCanvasAnimation(
         for (let i = 0; i < 22; i++) {
           const y = ((animTime * codeSpeed * (0.7 + (colSeed % 3) * 0.15) + i * 22 + colSeed * 2) % (h + 80)) - 40;
           const opacity = (1 - (i / 22) * 0.85) * (0.12 + Math.sin(animTime * 2 + cx * 0.02) * 0.06);
-          ctx.fillStyle = `rgba(40,40,50,${opacity})`;
+          ctx.fillStyle = `rgba(28,25,23,${opacity})`;
           ctx.fillText(codeChars[(cx + i) % 2], cx, y);
         }
       }
 
-      // DNA double helix
-      const helixCount = Math.max(2, Math.floor(w / 320));
+      // DNA double helix (3D depth)
+      const helixCount = Math.max(2, Math.floor(w / 380));
       const helixSpacing = w / (helixCount + 1);
-      const frequency = 0.012;
-      const verticalSpeed = animTime * 45;
+      const freq = 0.009;
+      const vSpeed = animTime * 28;
 
       for (let helix = 0; helix < helixCount; helix++) {
-        const centerX = helixSpacing * (helix + 1);
-        const amplitude = 48 + helix * 12;
-        const phaseOffset = helix * (Math.PI / 3);
+        const cx = helixSpacing * (helix + 1);
+        const amp = 38 + helix * 8;
+        const pOff = helix * (Math.PI / 3);
 
-        for (let y = -60; y < h + 60; y += 28) {
-          const adjustedY = ((y + verticalSpeed) % (h + 120)) - 60;
-          const phase = adjustedY * frequency + phaseOffset;
-          const x1 = centerX + Math.sin(phase) * amplitude;
-          const x2 = centerX + Math.sin(phase + Math.PI) * amplitude;
-          const depth = (Math.cos(phase) + 1) / 2;
-          if (depth > 0.25 && depth < 0.75) {
-            ctx.beginPath();
-            ctx.moveTo(x1, adjustedY);
-            ctx.lineTo(x2, adjustedY);
-            ctx.strokeStyle = `rgba(30,30,40,${0.2 * (1 - Math.abs(depth - 0.5) * 2)})`;
-            ctx.lineWidth = 1.2;
-            ctx.stroke();
-          }
+        // Pre-compute strand positions for this frame
+        const points: Array<{ y: number; x0: number; x1: number; z0: number; z1: number }> = [];
+        for (let y = -80; y < h + 80; y += 2) {
+          const ay = ((y + vSpeed) % (h + 160)) - 80;
+          const phase = ay * freq + pOff;
+          points.push({
+            y: ay,
+            x0: cx + Math.sin(phase) * amp,
+            x1: cx + Math.sin(phase + Math.PI) * amp,
+            z0: Math.cos(phase),              // -1 to 1, depth for strand 0
+            z1: Math.cos(phase + Math.PI),    // opposite depth for strand 1
+          });
         }
 
-        for (let strand = 0; strand < 2; strand++) {
-          const strandPhase = strand * Math.PI;
-          ctx.beginPath();
-          for (let y = -60; y < h + 60; y += 4) {
-            const adjustedY = ((y + verticalSpeed) % (h + 120)) - 60;
-            const phase = adjustedY * frequency + phaseOffset + strandPhase;
-            const x = centerX + Math.sin(phase) * amplitude;
-            if (y === -60) ctx.moveTo(x, adjustedY);
-            else ctx.lineTo(x, adjustedY);
-          }
-          ctx.strokeStyle = 'rgba(30,30,40,0.25)';
-          ctx.lineWidth = 2;
-          ctx.stroke();
-
-          for (let y = -60; y < h + 60; y += 26) {
-            const adjustedY = ((y + verticalSpeed) % (h + 120)) - 60;
-            const phase = adjustedY * frequency + phaseOffset + strandPhase;
-            const x = centerX + Math.sin(phase) * amplitude;
-            const depth = (Math.cos(phase) + 1) / 2;
-            const size = 2 + depth * 2.5;
-            const pulse = Math.sin(animTime * 3 + y * 0.08) * 0.35 + 0.65;
+        // Draw back strand first, then base pairs, then front strand (painter's algorithm)
+        for (let pass = 0; pass < 3; pass++) {
+          // pass 0 = back strand, pass 1 = base pairs, pass 2 = front strand
+          if (pass === 0 || pass === 2) {
+            // Draw a strand — pick whichever is in back (pass=0) or front (pass=2)
             ctx.beginPath();
-            ctx.arc(x, adjustedY, size * pulse, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(40,40,50,${(0.3 + depth * 0.5) * pulse})`;
-            ctx.fill();
+            let started = false;
+            let prevPx = 0, prevPy = 0;
+            for (const pt of points) {
+              // Determine which strand is front/back at this point
+              const frontIs0 = pt.z0 > pt.z1;
+              const drawStrand0 = pass === 2 ? frontIs0 : !frontIs0;
+              const sx = drawStrand0 ? pt.x0 : pt.x1;
+              const sz = drawStrand0 ? pt.z0 : pt.z1;
+              // Depth-based thickness and opacity
+              const depthNorm = (sz + 1) / 2; // 0=far, 1=near
+              if (!started) {
+                ctx.moveTo(sx, pt.y);
+                prevPx = sx; prevPy = pt.y;
+                started = true;
+              } else {
+                const mx = (prevPx + sx) / 2;
+                const my = (prevPy + pt.y) / 2;
+                ctx.quadraticCurveTo(prevPx, prevPy, mx, my);
+                prevPx = sx; prevPy = pt.y;
+              }
+              // We set a single style after the path — use average depth
+              void depthNorm;
+            }
+            // Average depth for this pass
+            const avgDepth = pass === 2 ? 0.75 : 0.25;
+            const strandAlpha = 0.06 + avgDepth * 0.14;
+            const strandWidth = 0.5 + avgDepth * 1;
+            ctx.strokeStyle = `rgba(28,25,23,${strandAlpha})`;
+            ctx.lineWidth = strandWidth;
+            ctx.stroke();
+
+            // Nodes on this strand
+            for (let i = 0; i < points.length; i += 22) {
+              const pt = points[i];
+              const frontIs0 = pt.z0 > pt.z1;
+              const drawStrand0 = pass === 2 ? frontIs0 : !frontIs0;
+              const nx = drawStrand0 ? pt.x0 : pt.x1;
+              const nz = drawStrand0 ? pt.z0 : pt.z1;
+              const depthNorm = (nz + 1) / 2;
+              const pulse = Math.sin(animTime * 2 + i * 0.12) * 0.2 + 0.8;
+              const nodeR = (0.8 + depthNorm * 1.8) * pulse;
+              const nodeA = (0.08 + depthNorm * 0.3) * pulse;
+              ctx.beginPath();
+              ctx.arc(nx, pt.y, nodeR, 0, Math.PI * 2);
+              ctx.fillStyle = `rgba(40,40,65,${nodeA})`;
+              ctx.fill();
+            }
+          }
+
+          if (pass === 1) {
+            // Base pair rungs — only draw where both strands are near-equidistant in depth
+            for (let i = 0; i < points.length; i += 20) {
+              const pt = points[i];
+              const midZ = (pt.z0 + pt.z1) / 2;
+              // Only draw when roughly in the "side" view (both strands visible)
+              if (Math.abs(midZ) < 0.45) {
+                const rungAlpha = 0.06 * (1 - Math.abs(midZ) * 2);
+                ctx.beginPath();
+                ctx.moveTo(pt.x0, pt.y);
+                ctx.lineTo(pt.x1, pt.y);
+                ctx.strokeStyle = `rgba(28,25,23,${rungAlpha})`;
+                ctx.lineWidth = 0.5;
+                ctx.stroke();
+                // Small dots at each end
+                for (const ex of [pt.x0, pt.x1]) {
+                  ctx.beginPath();
+                  ctx.arc(ex, pt.y, 1.2, 0, Math.PI * 2);
+                  ctx.fillStyle = `rgba(28,25,23,${rungAlpha * 1.5})`;
+                  ctx.fill();
+                }
+              }
+            }
           }
         }
       }
@@ -124,7 +175,7 @@ export function useCanvasAnimation(
         const pulse = Math.sin(p.pulse) * 0.3 + 0.7;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size * pulse, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(60,60,70,${p.opacity * pulse})`;
+        ctx.fillStyle = `rgba(28,25,23,${p.opacity * pulse})`;
         ctx.fill();
       });
 
