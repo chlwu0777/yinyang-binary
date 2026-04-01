@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>二进制之道 | The Tao of Binary</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { createRoot } = ReactDOM;
+    const rootEl = document.getElementById('root');
+    const base = window.location.href.replace(/\/[^/]*$/, '/');
+    const linesUrl = base + 'tao-of-binary-lines.preview.js';
+    const jsxUrl = base + 'tao-of-binary_1.jsx';
+
+    function showError(msg, detail) {
+      rootEl.innerHTML = '<div style="padding:40px;font-family:sans-serif;max-width:560px;margin:0 auto;"><p style="color:#c00;font-weight:bold;">' + msg + '</p><pre style="background:#f5f5f5;padding:12px;overflow:auto;font-size:12px;">' + (detail || '') + '</pre><p style="color:#666;margin-top:20px;">请用本地服务器打开：在此文件夹运行 <code>python3 -m http.server 8080</code>，然后访问 http://localhost:8080</p></div>';
+    }
+    fetch(linesUrl).then(function(r) {
+      if (!r.ok) throw new Error('爻辞加载失败: ' + linesUrl);
+      return r.text();
+    }).then(function(code) {
+      var script = document.createElement('script');
+      script.textContent = code.replace(/^\uFEFF/, '');
+      document.head.appendChild(script);
+      if (!window.linesByHex || Object.keys(window.linesByHex).length < 10) {
+        throw new Error('爻辞数据不完整');
+      }
+      return fetch(jsxUrl);
+    }).then(function(r) {
+      if (!r || !r.ok) throw new Error('无法加载 tao-of-binary_1.jsx');
+      return r.text();
+    }).then(function(jsxCode) {
+      let code = jsxCode
+        .replace(/import\s+React[^;]+;/g, 'const { useState, useEffect, useRef, useCallback, createContext, useContext } = React;')
+        .replace(/import\s*\{[^}]+\}\s*from\s*['"]\.\/tao-of-binary-lines\.js['"]\s*;?/g, 'const linesByHexModule = window.linesByHex;')
+        .replace(/export\s+default\s+TaoOfBinary\s*;?/g, 'window.TaoOfBinary = TaoOfBinary;');
+      code = code.replace(/^import\s+.+$/gm, '');
+      try {
+        const transformed = Babel.transform(code, { presets: ['react'] }).code;
+        eval(transformed);
+      } catch (e) {
+        showError('编译/运行失败', e.message + '\n\n' + e.stack);
+        return;
+      }
+      if (typeof window.TaoOfBinary !== 'function') {
+        showError('未找到 TaoOfBinary 组件', '');
+        return;
+      }
+      rootEl.innerHTML = '';
+      createRoot(rootEl).render(React.createElement(window.TaoOfBinary, { linesByHex: window.linesByHex }));
+    }).catch(function(err) {
+      showError('加载失败', err.message);
+      console.error(err);
+    });
+  </script>
+</body>
+</html>
