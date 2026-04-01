@@ -72,7 +72,7 @@ export function getTheme(mode: ThemeMode): ThemeColors {
 
 // Static style helpers (layout only, no colors)
 export const layout = {
-  ctr: (theme: ThemeColors) => ({ position: 'relative' as const, minHeight: '100vh', overflow: 'hidden', fontFamily: "'Noto Sans SC', 'Inter', 'PingFang SC', sans-serif", background: theme.bg, color: theme.text }),
+  ctr: (theme: ThemeColors) => ({ position: 'relative' as const, minHeight: '100vh', overflow: 'hidden', fontFamily: "'Noto Serif SC', 'Playfair Display', 'Georgia', 'SimSun', serif", background: theme.bg, color: theme.text }),
   canvas: { position: 'fixed' as const, top: 0, left: 0, width: '100%', height: '100%', zIndex: 0, pointerEvents: 'none' as const },
   content: { position: 'relative' as const, zIndex: 10, minHeight: '100vh', padding: '80px 16px 32px', pointerEvents: 'auto' as const },
   nav: { position: 'fixed' as const, top: 0, left: 0, right: 0, zIndex: 50, display: 'flex', justifyContent: 'center', padding: 12 },
@@ -80,6 +80,6 @@ export const layout = {
   navBtn: (active: boolean, theme: ThemeColors) => ({ padding: '10px 18px', borderRadius: 6, fontSize: 14, fontWeight: 500, border: 'none', cursor: 'pointer', background: active ? theme.text : 'transparent', color: active ? theme.bg : theme.sub }),
   card: (theme: ThemeColors) => ({ background: theme.card, backdropFilter: 'blur(20px)', borderRadius: 12, padding: 32, border: `1px solid ${theme.border}`, boxShadow: theme.bg === '#121210' ? '0 2px 8px rgba(0,0,0,0.3), 0 0 1px rgba(255,255,255,0.1)' : '0 1px 3px rgba(28,25,23,0.04), 0 4px 12px rgba(28,25,23,0.03)' }),
   center: { display: 'flex', flexDirection: 'column' as const, alignItems: 'center', justifyContent: 'center', minHeight: 'calc(100vh - 112px)' },
-  title: (theme: ThemeColors) => ({ fontSize: 36, fontWeight: 300, letterSpacing: 4, marginBottom: 8, color: theme.text, fontFamily: "'Noto Serif SC', 'Playfair Display', serif" }),
+  title: (theme: ThemeColors) => ({ fontSize: 36, fontWeight: 300, letterSpacing: 4, marginBottom: 8, color: theme.text, fontFamily: "'Noto Serif SC', 'Playfair Display', 'Georgia', 'SimSun', serif" }),
   btn: { padding: '14px 28px', borderRadius: 8, border: 'none', cursor: 'pointer', fontSize: 15, fontWeight: 500 },
 };

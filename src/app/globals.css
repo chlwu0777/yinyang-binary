@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
 
 * {
   margin: 0;
@@ -18,7 +18,7 @@ html, body {
 
 body {
   min-height: 100%;
-  font-family: 'Noto Sans SC', 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: 'Noto Serif SC', 'Playfair Display', 'Georgia', 'SimSun', 'STSong', serif;
   background: #FAFAF9;
   color: #1C1917;
   -webkit-font-smoothing: antialiased;
