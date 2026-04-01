@@ -68,12 +68,12 @@ export default function LinesSection({ hex, compact = false }: { hex: HexagramDa
             {i > 0 && <ArrowUp theme={theme} />}
             <div style={{ padding: '10px 12px', borderRadius: 8, background: 'rgba(255,255,255,0.5)' }}>
               <p style={{ fontSize: 12, color: theme.sub, marginBottom: 4 }}>{LINE_LABELS[idx]} →</p>
-              {showCn && <p style={{ fontSize: 14, marginBottom: 4 }}>{lines[idx].cn}</p>}
+              {showCn && <p style={{ fontSize: 14, marginBottom: 4, color: theme.text }}>{lines[idx].cn}</p>}
               {showEn && <p style={{ fontSize: 13, color: theme.sub, lineHeight: 1.5 }}>{lines[idx].en}</p>}
               {(lines[idx].plainCn || lines[idx].plainEn) && (showCn || showEn) && (
                 <div style={{ marginTop: 8, paddingTop: 8, borderTop: `1px solid ${theme.border}` }}>
                   <p style={{ fontSize: 12, color: theme.sub, marginBottom: 2 }}>白话 · Vernacular</p>
-                  {showCn && lines[idx].plainCn && <p style={{ fontSize: 13, marginBottom: 4, lineHeight: 1.5 }}>{lines[idx].plainCn}</p>}
+                  {showCn && lines[idx].plainCn && <p style={{ fontSize: 13, marginBottom: 4, lineHeight: 1.5, color: theme.text }}>{lines[idx].plainCn}</p>}
                   {showEn && lines[idx].plainEn && <p style={{ fontSize: 12, color: theme.sub, lineHeight: 1.5 }}>{lines[idx].plainEn}</p>}
                 </div>
               )}

@@ -118,7 +118,7 @@ export default function GamePage() {
             <p style={{ fontSize: 13, color: theme.sub, textAlign: 'center', marginBottom: 20 }}>{lang === 'cn' ? '十进制' : 'Decimal'}: {gameState}</p>
             {info && (
               <div style={{ textAlign: 'center' }}>
-                <p style={{ fontSize: 48, marginBottom: 6 }}>{lang === 'cn' ? info.name : info.nameEn}</p>
+                <p style={{ fontSize: 48, marginBottom: 6, color: theme.text }}>{lang === 'cn' ? info.name : info.nameEn}</p>
                 <p style={{ fontSize: 20, color: theme.sub, marginBottom: 6 }}>{lang === 'cn' ? info.nameEn : info.name}</p>
                 <p style={{ fontSize: 14, color: theme.sub, marginBottom: 16 }}>#{info.num}</p>
                 <div style={{ padding: '14px 18px', borderRadius: 12, background: theme.subtleBg, border: `1px solid ${theme.border}` }}>
@@ -186,7 +186,7 @@ export default function GamePage() {
               {[0, 1, 2, 3, 4, 5].map((p) => <GameBitLine key={p} value={getBit(gameState, p)} position={p} canFlip={!isWin && !isLose} isAnimating={animatingBit === p} onFlip={flipBit} />)}
             </div>
             <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 22, color: theme.text, textAlign: 'center' }}>{toBinary(gameState)}</p>
-            <p style={{ fontSize: 20, textAlign: 'center', marginTop: 10 }}>{lang === 'cn' ? info?.name : info?.nameEn}</p>
+            <p style={{ fontSize: 20, textAlign: 'center', marginTop: 10, color: theme.text }}>{lang === 'cn' ? info?.name : info?.nameEn}</p>
             {info && <div style={{ marginTop: 14 }}><LinesSection hex={info} compact={true} /></div>}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -199,7 +199,7 @@ export default function GamePage() {
               {[0, 1, 2, 3, 4, 5].map((p) => <GameBitLine key={p} value={getBit(targetState!, p)} position={p} canFlip={false} isAnimating={false} />)}
             </div>
             <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 22, color: theme.sub, textAlign: 'center' }}>{toBinary(targetState!)}</p>
-            <p style={{ fontSize: 20, textAlign: 'center', marginTop: 10 }}>{lang === 'cn' ? targetInfo?.name : targetInfo?.nameEn}</p>
+            <p style={{ fontSize: 20, textAlign: 'center', marginTop: 10, color: theme.text }}>{lang === 'cn' ? targetInfo?.name : targetInfo?.nameEn}</p>
           </div>
         </div>
         <div style={{ marginTop: 36, display: 'flex', gap: 36, textAlign: 'center' }}>

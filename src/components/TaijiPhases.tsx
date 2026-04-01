@@ -59,7 +59,7 @@ export default function TaijiPhases() {
         <div style={{ ...layout.card(theme), display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 40 }}>
           <p style={{ fontSize: 12, color: theme.sub, marginBottom: 20 }}>{'PRE-BINARY · ' + i.home.preBinary}</p>
           <Taiji size={140} rotation={rotation} onClick={handleTaijiClick} interactive={true} />
-          <p style={{ fontSize: 26, fontWeight: 300, marginTop: 28 }}>{i.home.taiji}</p>
+          <p style={{ fontSize: 26, fontWeight: 300, marginTop: 28, color: theme.text }}>{i.home.taiji}</p>
           <p style={{ fontSize: 14, color: theme.sub }}>{i.home.taijiSub}</p>
         </div>
         <p style={{ fontSize: 13, color: theme.sub, marginTop: 40 }}>{i.home.clickStart}</p>
@@ -72,7 +72,7 @@ export default function TaijiPhases() {
     return (
       <div style={layout.center}>
         <div style={{ textAlign: 'center', marginBottom: 40 }}>
-          <h2 style={{ fontSize: 26, fontWeight: 300 }}>{i.home.analogDigital}</h2>
+          <h2 style={{ fontSize: 26, fontWeight: 300, color: theme.text }}>{i.home.analogDigital}</h2>
         </div>
         <div style={{ position: 'relative', width: 320, height: 200 }}>
           <div style={{ position: 'absolute', left: `calc(50% - ${sp}px - 45px)`, top: '50%', transform: 'translateY(-50%)', opacity: separationProgress }}>
@@ -94,15 +94,15 @@ export default function TaijiPhases() {
     return (
       <div style={layout.center}>
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
-          <h2 style={{ fontSize: 26, fontWeight: 300, marginBottom: 8 }}>{i.home.layer1}</h2>
+          <h2 style={{ fontSize: 26, fontWeight: 300, marginBottom: 8, color: theme.text }}>{i.home.layer1}</h2>
           <p style={{ fontSize: 14, color: theme.sub }}>Yang = 1, Yin = 0</p>
         </div>
         <div style={{ display: 'flex', gap: 32, marginBottom: 32, flexWrap: 'wrap', justifyContent: 'center' }}>
           <button type="button" onMouseDown={(e) => { e.preventDefault(); setHomePhase(2); }} style={{ ...layout.card(theme), cursor: 'pointer', border: 'none', minWidth: 140 }}>
             <div style={{ width: 80, height: 14, background: theme.placeholderLine, borderRadius: 7, margin: '0 auto' }} />
             <div style={{ textAlign: 'center', marginTop: 20 }}>
-              <p style={{ fontSize: 22 }}>{i.home.yang}</p>
-              <p style={{ fontSize: 36, fontFamily: 'monospace', fontWeight: 'bold', opacity: 0.6 }}>1</p>
+              <p style={{ fontSize: 22, color: theme.text }}>{i.home.yang}</p>
+              <p style={{ fontSize: 36, fontFamily: 'monospace', fontWeight: 'bold', opacity: 0.6, color: theme.text }}>1</p>
             </div>
           </button>
           <button type="button" onMouseDown={(e) => { e.preventDefault(); setHomePhase(2); }} style={{ ...layout.card(theme), cursor: 'pointer', border: 'none', minWidth: 140 }}>
@@ -111,8 +111,8 @@ export default function TaijiPhases() {
               <div style={{ width: 32, height: 14, background: theme.placeholderLine, borderRadius: 7 }} />
             </div>
             <div style={{ textAlign: 'center', marginTop: 20 }}>
-              <p style={{ fontSize: 22 }}>{i.home.yin}</p>
-              <p style={{ fontSize: 36, fontFamily: 'monospace', fontWeight: 'bold', opacity: 0.6 }}>0</p>
+              <p style={{ fontSize: 22, color: theme.text }}>{i.home.yin}</p>
+              <p style={{ fontSize: 36, fontFamily: 'monospace', fontWeight: 'bold', opacity: 0.6, color: theme.text }}>0</p>
             </div>
           </button>
         </div>
@@ -137,7 +137,7 @@ export default function TaijiPhases() {
     return (
       <div style={layout.center}>
         <div style={{ textAlign: 'center', marginBottom: 28 }}>
-          <h2 style={{ fontSize: 26, fontWeight: 300, marginBottom: 8 }}>{i.home.layer2}</h2>
+          <h2 style={{ fontSize: 26, fontWeight: 300, marginBottom: 8, color: theme.text }}>{i.home.layer2}</h2>
           <p style={{ fontSize: 14, color: theme.sub }}>{i.home.builtBottomUp}</p>
         </div>
         <div style={{ ...layout.card(theme), minWidth: 280, maxWidth: 320, marginBottom: 24 }}>
@@ -155,8 +155,8 @@ export default function TaijiPhases() {
               <p style={{ fontFamily: 'monospace', fontSize: 22, letterSpacing: 6, color: theme.sub }}>{currentTrigram.join('')}</p>
               {trigramKey && trigramInfo[trigramKey] && (
                 <div style={{ marginTop: 16 }}>
-                  <p style={{ fontSize: 40 }}>{trigramInfo[trigramKey].symbol}</p>
-                  <p style={{ fontSize: 22, marginTop: 8 }}>{trigramInfo[trigramKey].name} · {trigramInfo[trigramKey].element} {trigramInfo[trigramKey].elementEn}</p>
+                  <p style={{ fontSize: 40, color: theme.text }}>{trigramInfo[trigramKey].symbol}</p>
+                  <p style={{ fontSize: 22, marginTop: 8, color: theme.text }}>{trigramInfo[trigramKey].name} · {trigramInfo[trigramKey].element} {trigramInfo[trigramKey].elementEn}</p>
                 </div>
               )}
             </div>
@@ -184,8 +184,8 @@ export default function TaijiPhases() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10 }}>
             {Object.entries(trigramInfo).map(([c, info]) => (
               <div key={c} style={{ ...layout.card(theme), padding: 10, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <span style={{ fontSize: 24 }}>{info.symbol}</span>
-                <span style={{ fontSize: 14, marginTop: 4 }}>{info.name}</span>
+                <span style={{ fontSize: 24, color: theme.text }}>{info.symbol}</span>
+                <span style={{ fontSize: 14, marginTop: 4, color: theme.text }}>{info.name}</span>
                 <span style={{ fontSize: 11, fontFamily: 'monospace', color: '#888' }}>{c}</span>
               </div>
             ))}
@@ -200,7 +200,7 @@ export default function TaijiPhases() {
     return (
       <div style={layout.center}>
         <div style={{ textAlign: 'center', marginBottom: 28 }}>
-          <h2 style={{ fontSize: 26, fontWeight: 300, marginBottom: 8 }}>{i.home.layer3}</h2>
+          <h2 style={{ fontSize: 26, fontWeight: 300, marginBottom: 8, color: theme.text }}>{i.home.layer3}</h2>
           <p style={{ fontSize: 14, color: theme.sub }}>{i.home.lowerUpper}</p>
         </div>
         <div style={{ ...layout.card(theme), minWidth: 300, maxWidth: 360, marginBottom: 24 }}>
@@ -249,7 +249,7 @@ export default function TaijiPhases() {
                 <p style={{ fontSize: 12, color: theme.sub, marginTop: 4 }}>{i.home.decimal}: {parseInt(fullHex, 2)}</p>
                 {hexData && (
                   <>
-                    <p style={{ fontSize: 32, marginTop: 12 }}>{i.home.hexagram} {hexData.num} · {hexData.name}</p>
+                    <p style={{ fontSize: 32, marginTop: 12, color: theme.text }}>{i.home.hexagram} {hexData.num} · {hexData.name}</p>
                     <p style={{ fontSize: 18, color: theme.sub }}>{hexData.nameEn} · {hexData.meaning}</p>
                     <div style={{ marginTop: 18, padding: 14, borderRadius: 12, background: 'rgba(202,138,4,0.06)' }}>
                       <p style={{ fontSize: 14, fontFamily: 'monospace', color: theme.accent }}>{hexData.state}</p>
