@@ -25,7 +25,7 @@ export default function MastersPage() {
           <div style={{ display: 'flex', gap: 36, flexWrap: 'wrap', alignItems: 'flex-start' }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <div style={{ width: 160, height: 160, borderRadius: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16, background: theme.subtleBg, overflow: 'hidden' }}>
-                <MasterAvatar symbol={selectedMaster.avatar} imageUrl={selectedMaster.portrait} size={140} />
+                <MasterAvatar symbol={selectedMaster.avatar} imageUrl={selectedMaster.portrait} size={140} name={selectedMaster.nameEn} />
               </div>
               <p style={{ fontSize: 13, color: theme.sub }}>{lang === 'cn' ? selectedMaster.era : selectedMaster.eraEn}</p>
               <p style={{ fontSize: 12, color: theme.sub }}>{lang === 'cn' ? selectedMaster.eraEn : selectedMaster.era}</p>
@@ -63,7 +63,7 @@ export default function MastersPage() {
             <button type="button" key={m.id} onMouseDown={(e) => { e.preventDefault(); setSelectedMaster(m); }} style={{ ...layout.card(theme), padding: 24, cursor: 'pointer', border: `1px solid ${theme.border}`, textAlign: 'left' as const }}>
               <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 18 }}>
                 <div style={{ width: 88, height: 88, borderRadius: '50%', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', background: theme.text }}>
-                  <MasterAvatar symbol={m.avatar} imageUrl={m.portrait} size={88} />
+                  <MasterAvatar symbol={m.avatar} imageUrl={m.portrait} size={88} name={m.nameEn} />
                 </div>
               </div>
               <p style={{ fontSize: 20, fontWeight: 500, textAlign: 'center', color: theme.text }}>{lang === 'cn' ? m.name : m.nameEn}</p>

@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import Taiji from './Taiji';
 import Line from './Line';
-import Hexagram from './Hexagram';
 import LinesSection from './LinesSection';
 import { layout } from '@/lib/theme';
 import { t } from '@/lib/i18n';

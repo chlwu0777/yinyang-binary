@@ -83,7 +83,7 @@ export default function HexagramsPage() {
           </div>
         </div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gap: 8 }}>
+        <div className="hex-grid">
           {hexagramsData.map((h) => (
             <button
               type="button"

@@ -221,7 +221,7 @@ export default function GamePage() {
           <p style={{ fontSize: 14, color: theme.sub }}>{i.game.clickExplore}</p>
         </div>
         <div style={{ maxWidth: 800, margin: '0 auto' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gap: 6 }}>
+          <div className="hex-grid">
             {hexagramsData.map((h) => {
               const v = parseInt(h.binary, 2);
               return (

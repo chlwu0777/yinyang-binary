@@ -29,9 +29,9 @@ export function AppProviders({ children }: { children: ReactNode }) {
   const theme = getTheme(themeMode);
 
   useEffect(() => {
-    import('@/data/linesByHex').then((mod) => {
-      setLinesByHex(mod.linesByHex);
-    });
+    import('@/data/linesByHex')
+      .then((mod) => setLinesByHex(mod.linesByHex))
+      .catch((err) => console.error('Failed to load hexagram line data:', err));
   }, []);
 
   // Update body background/color when theme changes

@@ -26,7 +26,6 @@ export default function HexagramInteractive({ hex }: { hex: HexagramData | null 
   const bits = hex.binary.split('');
   const lineData = getLinesForHex(hex.num, linesByHex);
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     const root = rootRef.current!;
     const tooltipEl = tooltipRef.current!;
@@ -154,8 +153,10 @@ export default function HexagramInteractive({ hex }: { hex: HexagramData | null 
             data-yao-line={i}
             role="button"
             tabIndex={0}
+            aria-label={`${LINE_LABELS[i]} — ${bits[i] === '1' ? 'Yang' : 'Yin'}`}
             title={lineData && lineData[i] ? lineData[i].cn : LINE_LABELS[i] + ' 爻 Line'}
             onClick={handleClick(i)}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleClick(i)(e as unknown as React.MouseEvent); } }}
             style={{
               cursor: 'pointer',
               minHeight: 28,

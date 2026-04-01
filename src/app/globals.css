@@ -30,10 +30,28 @@ a {
   text-decoration: none;
 }
 
-/* Mobile timeline responsive */
+/* Hexagram grid responsive */
+.hex-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 8px;
+}
+
 @media (max-width: 768px) {
+  .hex-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+  }
+
   .timeline-item {
     padding-left: 48px !important;
     padding-right: 16px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .hex-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
   }
 }

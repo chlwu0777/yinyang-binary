@@ -112,8 +112,7 @@ export function useCanvasAnimation(
                 ctx.quadraticCurveTo(prevPx, prevPy, mx, my);
                 prevPx = sx; prevPy = pt.y;
               }
-              // We set a single style after the path — use average depth
-              void depthNorm;
+              void 0; // depthNorm used implicitly via avg
             }
             // Average depth for this pass
             const avgDepth = pass === 2 ? 0.75 : 0.25;
