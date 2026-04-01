@@ -111,13 +111,14 @@ export default function YarrowSticks({ total, phase, leftCount = 0, rightCount =
 
         case 'hanging':
           if (i === leftCount) {
+            // Hung stalk: placed horizontally between the two piles, as if held between fingers
             return {
               ...s,
               x: cx,
-              y: 16,
+              y: 48,
               group: 'hung',
               opacity: 1,
-              rotation: 0,
+              rotation: 90, // horizontal
             };
           }
           return s;
@@ -252,9 +253,18 @@ export default function YarrowSticks({ total, phase, leftCount = 0, rightCount =
         </>
       )}
 
-      {phase === 'hanging' && (
-        <div style={{ position: 'absolute', left: '50%', top: 2, transform: 'translateX(-50%)', fontSize: 12, color: theme.accent, fontWeight: 600 }}>
-          ☝ 1
+      {(phase === 'hanging' || phase === 'counting-left' || phase === 'counting-right') && (
+        <div style={{ position: 'absolute', left: '50%', top: 10, transform: 'translateX(-50%)', textAlign: 'center' }}>
+          {/* Two-finger pinch illustration */}
+          <svg width="48" height="50" viewBox="0 0 48 50" style={{ display: 'block', margin: '0 auto' }}>
+            {/* Left finger */}
+            <path d="M10 50 Q12 30 20 22" stroke={theme.sub} strokeWidth="2.5" fill="none" strokeLinecap="round" opacity="0.5" />
+            {/* Right finger */}
+            <path d="M38 50 Q36 30 28 22" stroke={theme.sub} strokeWidth="2.5" fill="none" strokeLinecap="round" opacity="0.5" />
+            {/* Pinch point */}
+            <circle cx="24" cy="20" r="3" fill={theme.accent} opacity="0.6" />
+          </svg>
+          <span style={{ fontSize: 11, color: theme.accent, fontWeight: 500 }}>1</span>
         </div>
       )}
 
