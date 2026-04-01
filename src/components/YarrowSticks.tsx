@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { useAppTheme } from '@/contexts/AppProviders';
 
 interface Stick {
@@ -10,6 +10,10 @@ interface Stick {
   rotation: number;
   group: 'center' | 'left' | 'right' | 'hung' | 'aside';
   opacity: number;
+  // Each stick has persistent random traits
+  curve: number;    // natural bend amount
+  shade: number;    // color variation 0-1
+  thickness: number; // slight width variation
 }
 
 interface YarrowSticksProps {
@@ -19,37 +23,52 @@ interface YarrowSticksProps {
   rightCount?: number;
   leftRemainder?: number;
   rightRemainder?: number;
-  asideCount?: number;
 }
 
 export default function YarrowSticks({ total, phase, leftCount = 0, rightCount = 0, leftRemainder = 0, rightRemainder = 0 }: YarrowSticksProps) {
   const theme = useAppTheme();
   const containerRef = useRef<HTMLDivElement>(null);
   const [sticks, setSticks] = useState<Stick[]>([]);
-  const [containerWidth, setContainerWidth] = useState(600);
+  const [containerWidth, setContainerWidth] = useState(700);
+
+  // Persistent random traits per stick (don't change on re-render)
+  const traits = useMemo(() =>
+    Array.from({ length: 49 }, () => ({
+      curve: (Math.random() - 0.5) * 8,
+      shade: Math.random(),
+      thickness: 3 + Math.random() * 1.5,
+      naturalRotation: (Math.random() - 0.5) * 25,
+    })),
+  []);
 
   // Initialize sticks
   useEffect(() => {
-    const w = containerRef.current?.offsetWidth || 600;
+    const w = containerRef.current?.offsetWidth || 700;
     setContainerWidth(w);
+    const cx = w / 2;
     const newSticks: Stick[] = [];
     for (let i = 0; i < 49; i++) {
       newSticks.push({
         id: i,
-        x: w / 2 + (Math.random() - 0.5) * 80,
-        y: 120 + (Math.random() - 0.5) * 40,
-        rotation: (Math.random() - 0.5) * 30,
+        x: cx + (Math.random() - 0.5) * 160,
+        y: 140 + (Math.random() - 0.5) * 60,
+        rotation: traits[i].naturalRotation,
         group: i < total ? 'center' : 'aside',
-        opacity: i < total ? 1 : 0.2,
+        opacity: i < total ? 1 : 0.15,
+        curve: traits[i].curve,
+        shade: traits[i].shade,
+        thickness: traits[i].thickness,
       });
     }
     setSticks(newSticks);
-  }, [total]);
+  }, [total, traits]);
 
   // Animate based on phase
   useEffect(() => {
     const w = containerWidth;
-    const centerX = w / 2;
+    const cx = w / 2;
+    const colSpan = 14; // spacing between sticks in a pile
+    const rowH = 18;
 
     setSticks(prev => prev.map((s, i) => {
       if (s.group === 'aside' && phase !== 'idle') return s;
@@ -58,28 +77,33 @@ export default function YarrowSticks({ total, phase, leftCount = 0, rightCount =
         case 'idle':
           return {
             ...s,
-            x: centerX + (Math.random() - 0.5) * 80,
-            y: 120 + (Math.random() - 0.5) * 40,
+            x: cx + (Math.random() - 0.5) * 160,
+            y: 140 + (Math.random() - 0.5) * 60,
+            rotation: traits[i].naturalRotation,
             group: i < total ? 'center' : 'aside',
             opacity: i < total ? 1 : 0.15,
           };
 
         case 'splitting':
-          if (i >= total) return { ...s, opacity: 0.15 };
+          if (i >= total) return { ...s, opacity: 0.12 };
           if (i < leftCount) {
+            const cols = Math.min(leftCount, 10);
             return {
               ...s,
-              x: centerX - 100 + (i % 8) * 10 + (Math.random() - 0.5) * 4,
-              y: 100 + Math.floor(i / 8) * 14,
+              x: cx - 160 + (i % cols) * colSpan + (Math.random() - 0.5) * 3,
+              y: 80 + Math.floor(i / cols) * rowH,
+              rotation: traits[i].naturalRotation * 0.3,
               group: 'left',
               opacity: 1,
             };
           } else {
             const ri = i - leftCount;
+            const rCols = Math.min(rightCount, 10);
             return {
               ...s,
-              x: centerX + 60 + (ri % 8) * 10 + (Math.random() - 0.5) * 4,
-              y: 100 + Math.floor(ri / 8) * 14,
+              x: cx + 40 + (ri % rCols) * colSpan + (Math.random() - 0.5) * 3,
+              y: 80 + Math.floor(ri / rCols) * rowH,
+              rotation: traits[i].naturalRotation * 0.3,
               group: 'right',
               opacity: 1,
             };
@@ -87,11 +111,10 @@ export default function YarrowSticks({ total, phase, leftCount = 0, rightCount =
 
         case 'hanging':
           if (i === leftCount) {
-            // The hung stick
             return {
               ...s,
-              x: centerX,
-              y: 20,
+              x: cx,
+              y: 16,
               group: 'hung',
               opacity: 1,
               rotation: 0,
@@ -101,43 +124,44 @@ export default function YarrowSticks({ total, phase, leftCount = 0, rightCount =
 
         case 'counting-left':
           if (s.group === 'left') {
-            const li = i;
-            const isRemainder = li >= (leftCount - leftRemainder);
+            const isRemainder = i >= (leftCount - leftRemainder);
             return {
               ...s,
-              opacity: isRemainder ? 0.4 : 1,
+              opacity: isRemainder ? 0.3 : 1,
+              y: s.y + (isRemainder ? 12 : 0), // push remainder down slightly
             };
           }
           return s;
 
         case 'counting-right':
           if (s.group === 'right') {
-            const ri = i - leftCount - 1; // -1 for hung
+            const ri = i - leftCount - 1;
             const rightTotal = rightCount - 1;
             const isRemainder = ri >= (rightTotal - rightRemainder);
             return {
               ...s,
-              opacity: isRemainder ? 0.4 : 1,
+              opacity: isRemainder ? 0.3 : 1,
+              y: s.y + (isRemainder ? 12 : 0),
             };
           }
           return s;
 
         case 'gathering':
-          // Move remainders + hung to aside
-          if (s.opacity <= 0.4 || s.group === 'hung') {
+          if (s.opacity <= 0.3 || s.group === 'hung') {
             return {
               ...s,
-              x: w - 60 + (Math.random() - 0.5) * 20,
-              y: 200 + (Math.random() - 0.5) * 20,
+              x: w - 50 + (Math.random() - 0.5) * 30,
+              y: 300 + (Math.random() - 0.5) * 30,
+              rotation: (Math.random() - 0.5) * 40,
               group: 'aside',
-              opacity: 0.2,
+              opacity: 0.15,
             };
           }
-          // Remaining sticks back to center
           return {
             ...s,
-            x: centerX + (Math.random() - 0.5) * 60,
-            y: 120 + (Math.random() - 0.5) * 30,
+            x: cx + (Math.random() - 0.5) * 120,
+            y: 140 + (Math.random() - 0.5) * 50,
+            rotation: traits[i].naturalRotation,
             group: 'center',
             opacity: 1,
           };
@@ -146,7 +170,61 @@ export default function YarrowSticks({ total, phase, leftCount = 0, rightCount =
           return s;
       }
     }));
-  }, [phase, total, leftCount, rightCount, leftRemainder, rightRemainder, containerWidth]);
+  }, [phase, total, leftCount, rightCount, leftRemainder, rightRemainder, containerWidth, traits]);
+
+  // Render a single "yarrow stalk" as an SVG for natural look
+  const renderStick = (stick: Stick) => {
+    const h = 80; // stick height
+    const w = stick.thickness;
+    const isHung = stick.group === 'hung';
+    const isDim = stick.opacity < 0.5;
+
+    // Color: warm straw tones with variation
+    const baseHue = 38 + stick.shade * 12; // 38-50 (straw yellow range)
+    const baseSat = 55 + stick.shade * 20;
+    const baseLit = isDim ? 65 : (45 + stick.shade * 15);
+    const color1 = `hsl(${baseHue}, ${baseSat}%, ${baseLit}%)`;
+    const color2 = `hsl(${baseHue - 5}, ${baseSat - 10}%, ${baseLit - 8}%)`;
+    const hungColor = theme.accent;
+
+    return (
+      <div
+        key={stick.id}
+        style={{
+          position: 'absolute',
+          left: stick.x - w / 2,
+          top: stick.y - h / 2,
+          width: w + 2,
+          height: h,
+          opacity: stick.opacity,
+          transform: `rotate(${stick.rotation}deg)`,
+          transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+          transformOrigin: 'center',
+          filter: isHung ? `drop-shadow(0 0 6px ${theme.accent}66)` : 'none',
+        }}
+      >
+        <svg width={w + 2} height={h} viewBox={`0 0 ${w + 2} ${h}`} style={{ overflow: 'visible' }}>
+          <defs>
+            <linearGradient id={`stalk-${stick.id}`} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={isHung ? hungColor : color1} />
+              <stop offset="50%" stopColor={isHung ? hungColor : color2} />
+              <stop offset="100%" stopColor={isHung ? hungColor : color1} stopOpacity="0.8" />
+            </linearGradient>
+          </defs>
+          {/* Main stalk body — slightly curved path */}
+          <path
+            d={`M${w / 2 + 1} 2 Q${w / 2 + 1 + stick.curve} ${h / 2} ${w / 2 + 1} ${h - 2}`}
+            stroke={`url(#stalk-${stick.id})`}
+            strokeWidth={w}
+            strokeLinecap="round"
+            fill="none"
+          />
+          {/* Top node — slightly thicker (like a real reed joint) */}
+          <circle cx={w / 2 + 1} cy={4} r={w * 0.6} fill={isHung ? hungColor : color1} opacity={0.7} />
+        </svg>
+      </div>
+    );
+  };
 
   return (
     <div
@@ -154,54 +232,38 @@ export default function YarrowSticks({ total, phase, leftCount = 0, rightCount =
       style={{
         position: 'relative',
         width: '100%',
-        maxWidth: 600,
-        height: 260,
+        maxWidth: 700,
+        height: 380,
         margin: '0 auto',
         overflow: 'hidden',
       }}
     >
-      {/* Labels */}
+      {/* Pile labels */}
       {phase === 'splitting' && (
         <>
-          <div style={{ position: 'absolute', left: '20%', top: 0, fontSize: 12, color: theme.sub, textAlign: 'center' }}>
+          <div style={{ position: 'absolute', left: containerWidth / 2 - 160, top: 52, fontSize: 14, color: theme.sub, fontWeight: 500, fontFamily: "'JetBrains Mono', monospace" }}>
             {leftCount}
           </div>
-          <div style={{ position: 'absolute', right: '20%', top: 0, fontSize: 12, color: theme.sub, textAlign: 'center' }}>
+          <div style={{ position: 'absolute', left: containerWidth / 2 + 40, top: 52, fontSize: 14, color: theme.sub, fontWeight: 500, fontFamily: "'JetBrains Mono', monospace" }}>
             {rightCount}
           </div>
+          {/* Dividing line */}
+          <div style={{ position: 'absolute', left: containerWidth / 2 - 4, top: 70, width: 1, height: 240, background: theme.divider, opacity: 0.5 }} />
         </>
       )}
+
       {phase === 'hanging' && (
-        <div style={{ position: 'absolute', left: '50%', top: 4, transform: 'translateX(-50%)', fontSize: 11, color: theme.accent }}>
-          1
+        <div style={{ position: 'absolute', left: '50%', top: 2, transform: 'translateX(-50%)', fontSize: 12, color: theme.accent, fontWeight: 600 }}>
+          ☝ 1
         </div>
       )}
 
-      {/* Sticks */}
-      {sticks.map((stick) => (
-        <div
-          key={stick.id}
-          style={{
-            position: 'absolute',
-            left: stick.x,
-            top: stick.y,
-            width: 2.5,
-            height: 55,
-            borderRadius: 1.5,
-            background: stick.group === 'hung'
-              ? theme.accent
-              : `linear-gradient(to bottom, ${theme.accent}cc, ${theme.accent}88)`,
-            opacity: stick.opacity,
-            transform: `rotate(${stick.rotation}deg)`,
-            transition: 'all 0.7s cubic-bezier(0.16, 1, 0.3, 1)',
-            transformOrigin: 'center',
-          }}
-        />
-      ))}
+      {/* Render all sticks */}
+      {sticks.map(renderStick)}
 
-      {/* Aside label */}
-      {phase !== 'idle' && (
-        <div style={{ position: 'absolute', right: 8, bottom: 8, fontSize: 11, color: theme.sub }}>
+      {/* Aside pile label */}
+      {phase !== 'idle' && 49 - total > 0 && (
+        <div style={{ position: 'absolute', right: 12, bottom: 12, fontSize: 12, color: theme.sub, opacity: 0.6, fontFamily: "'JetBrains Mono', monospace" }}>
           {49 - total}
         </div>
       )}
