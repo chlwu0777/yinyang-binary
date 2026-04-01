@@ -20,6 +20,7 @@ export default function Nav() {
     { href: '/', label: i.nav.home },
     { href: '/masters', label: i.nav.masters },
     { href: '/hexagrams', label: i.nav.hexagrams },
+    { href: '/divination', label: i.divination.navLabel },
     { href: '/game', label: i.nav.game },
   ];
 

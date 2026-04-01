@@ -87,6 +87,10 @@ export function t(lang: Lang) {
       ending2: cn ? '从伏羲的三爻八卦，到现代计算机的万亿晶体管。' : "from Fu Xi's trigrams to trillions of transistors.",
       ending3: cn ? '0和1的故事，跨越了五千年。' : 'The story of 0 and 1 spans five millennia.',
     },
+    divination: {
+      title: cn ? '蓍草占卜' : 'Yarrow Stalk Divination',
+      navLabel: cn ? '占卜' : 'Divination',
+    },
     common: {
       back: cn ? '← 返回' : '← Back',
       restart: cn ? '重新开始' : 'Restart',
